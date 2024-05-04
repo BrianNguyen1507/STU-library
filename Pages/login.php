@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="../css/login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
-
+<script src="../utils/clear.js"></script>
+<script src="../utils/pop.js"></script>
 <body>
   <div class="center">
     <input type="checkbox" id="show" style="display: none;">
@@ -39,8 +40,6 @@
       </form>
     </div>
   </div>
-
-
   <script>
     window.onload = function () {
       document.getElementById('show').checked = true;
@@ -79,7 +78,7 @@
               sessionStorage.setItem("role", response.role);
               sessionStorage.setItem("email", response.email);
               if (response.role === "Role_Student") {
-                window.location.href = "../index.html";
+                window.location.href = "../index.php";
 
                 //phan trang
                 // } else if (response.role === "admin") {
@@ -103,8 +102,6 @@
       xhr.send(jsonData);
     }
   </script>
-
-
 </body>
 
 </html>
