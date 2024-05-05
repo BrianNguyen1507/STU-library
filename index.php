@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Bookly - Bookstore eCommerce Website Template</title>
+    <title>STUDENTS SITE</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -281,85 +281,68 @@
                                                                     id="nav-sign-in-tab" data-bs-toggle="tab"
                                                                     data-bs-target="#nav-sign-in" type="button"
                                                                     role="tab" aria-controls="nav-sign-in"
-                                                                    aria-selected="true">Sign In</button>
-                                                                <button class="nav-link text-capitalize"
-                                                                    id="nav-register-tab" data-bs-toggle="tab"
-                                                                    data-bs-target="#nav-register" type="button"
-                                                                    role="tab" aria-controls="nav-register"
-                                                                    aria-selected="false">Register</button>
+                                                                    aria-selected="true">Thông tin cá nhân</button>
                                                             </div>
                                                         </nav>
-                                                        <div class="tab-content" id="nav-tabContent">
-                                                            <div class="tab-pane fade active show" id="nav-sign-in"
-                                                                role="tabpanel" aria-labelledby="nav-sign-in-tab">
-                                                                <div class="form-group py-3">
-                                                                    <label class="mb-2" for="sign-in">Username or email
-                                                                        address *</label>
-                                                                    <input type="text" minlength="2" name="username"
-                                                                        placeholder="Your Username"
-                                                                        class="form-control w-100 rounded-3 p-3"
-                                                                        required>
-                                                                </div>
-                                                                <div class="form-group pb-3">
-                                                                    <label class="mb-2" for="sign-in">Password *</label>
-                                                                    <input type="password" minlength="2" name="password"
-                                                                        placeholder="Your Password"
-                                                                        class="form-control w-100 rounded-3 p-3"
-                                                                        required>
-                                                                </div>
-                                                                <label class="py-3">
-                                                                    <input type="checkbox" required="" class="d-inline">
-                                                                    <span class="label-body">Remember me</span>
-                                                                    <span class="label-body"><a href="#"
-                                                                            class="fw-bold">Forgot Password</a></span>
-                                                                </label>
-                                                                <button type="submit" name="submit"
-                                                                    class="btn btn-dark w-100 my-3">Login</button>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="nav-register" role="tabpanel"
-                                                                aria-labelledby="nav-register-tab">
-                                                                <div class="form-group py-3">
-                                                                    <label class="mb-2" for="register">Your email
-                                                                        address *</label>
-                                                                    <input type="text" minlength="2" name="username"
-                                                                        placeholder="Your Email Address"
-                                                                        class="form-control w-100 rounded-3 p-3"
-                                                                        required>
-                                                                </div>
-                                                                <div class="form-group pb-3">
-                                                                    <label class="mb-2" for="sign-in">Password *</label>
-                                                                    <input type="password" minlength="2" name="password"
-                                                                        placeholder="Your Password"
-                                                                        class="form-control w-100 rounded-3 p-3"
-                                                                        required>
-                                                                </div>
-                                                                <label class="py-3">
-                                                                    <input type="checkbox" required="" class="d-inline">
-                                                                    <span class="label-body">I agree to the <a href="#"
-                                                                            class="fw-bold">Privacy
-                                                                            Policy</a></span>
-                                                                </label>
-                                                                <button type="submit" name="submit"
-                                                                    class="btn btn-dark w-100 my-3">Register</button>
-                                                            </div>
-                                                        </div>
+                                                        <div id="user-info"></div>
+                                                        <script src="modules/userData/getUserData.js"></script>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- <script>
+                                        function UpdateUsers(event) {
+                                            event.preventDefault();
+                                            let token = sessionStorage.getItem("token");
+                                            let username = document.getElementById("username").value;
+                                            let diaChi = document.getElementById("diaChi").value;
+                                            let dienthoai = document.getElementById("dienthoai").value;
+                                            let updateData = {
+                                                username: username,
+                                                diaChi: diaChi,
+                                                dienthoai: dienthoai,
+                                            };
+
+                                            sendUpdateData(updateData, token);
+                                        }
+
+                                        function sendUpdateData(updateData, token) {
+                                            var xhr = new XMLHttpRequest();
+                                            var url = 'modules/userData/updateUserData.php';
+                                            xhr.open("PUT", url, true);
+                                            xhr.setRequestHeader("Content-Type", "application/json");
+                                            xhr.setRequestHeader("Authorization", "Bearer " + token);
+                                            xhr.onreadystatechange = function () {
+                                                if (xhr.readyState === 4) {
+                                                    if (xhr.status === 200) {
+                                                        var response = JSON.parse(xhr.responseText);
+                                                        document.getElementById("status").innerText = "Success";
+                                                        document.getElementById("status").style.color = "green";
+                                                    } else {
+                                                        document.getElementById("status").innerText = "Server error";
+                                                        document.getElementById("status").style.color = "red";
+                                                    }
+                                                }
+                                            };
+                                            var jsonData = JSON.stringify(updateData);
+                                            console.log(jsonData);
+                                            xhr.send(jsonData);
+                                        }
+                                    </script>
+ -->
                                 </li>
                                 <li class="wishlist-dropdown dropdown pe-3">
                                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button"
                                         aria-expanded="false">
                                         <svg class="wishlist">
-                                            <use xlink:href="#heart"></use>
+                                            <use xlink:href="#cart"></use>
                                         </svg>
                                     </a>
                                     <div
                                         class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="text-primary">Danh sách mượn</span>
+                                            <span class="text-primary">Danh sách đã thêm</span>
                                             <span class="badge bg-primary rounded-pill">2</span>
                                         </h4>
                                         <ul class="list-group mb-3">
@@ -393,10 +376,8 @@
                                             </li>
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
-                                            <a href="#" class="w-100 btn btn-dark mb-1" type="submit">Add all to
-                                                cart</a>
-                                            <a href="cart.html" class="w-100 btn btn-primary" type="submit">View
-                                                cart</a>
+                                            <a href="cart.html" class="w-100 btn btn-primary" type="submit">Xem chi tiết
+                                                danh sách</a>
                                         </div>
                                     </div>
                                 </li>
@@ -409,65 +390,10 @@
         </nav>
 
     </header>
-
-    <section id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray"
-        style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
-            <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80"
-                height="80">
-                <use xlink:href="#alt-arrow-right-outline"></use>
-            </svg>
-        </div>
-        <div class="position-absolute start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev main-slider-button-prev">
-            <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80"
-                height="80">
-                <use xlink:href="#alt-arrow-left-outline"></use>
-            </svg>
-        </div>
-        <div class="swiper main-swiper">
-            <div class="swiper-wrapper d-flex align-items-center">
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
-                            <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                                <div class="banner-content">
-                                    <h2>The Fine Print Book Collection</h2>
-                                    <a href="#" id="scrollToBestSellingItems" class="btn mt-3">Xem ngay</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <div class="image-holder">
-                                    <img src="images/banner-image2.png" class="img-fluid" alt="banner">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
-                            <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                                <div class="banner-content">
-                                    <h2>Your Heart is the Sea</h2>
-                                    <p>Limited stocks available. Grab it now!</p>
-                                    <a href="#" id="scrollToBestSellingItems" class="btn mt-3">Xem ngay</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <div class="image-holder">
-                                    <img src="images/banner-image.png" class="img-fluid" alt="banner">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <section id="best-selling-items" class="position-relative padding-large ">
         <div class="container">
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                <h3 class="d-flex align-items-center">Tất cả tài liệu</h3>
+                <h3 class="d-flex align-items-center">DANH SÁCH TÀI LIỆU</h3>
             </div>
             <div
                 class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
@@ -495,44 +421,7 @@
         </div>
     </section>
 
-    <section id="limited-offer" class="padding-large"
-        style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-md-6 text-center">
-                    <div class="image-holder">
-                        <img src="images/banner-image3.png" class="img-fluid" alt="banner">
-                    </div>
-                </div>
-                <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                    <h2>30% Discount on all items. Hurry Up !!!</h2>
-                    <div id="countdown-clock" class="text-dark d-flex align-items-center my-3">
-                        <div class="time d-grid pe-3">
-                            <span class="days fs-1 fw-normal"></span>
-                            <small>Days</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="hours fs-1 fw-normal"></span>
-                            <small>Hrs</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="minutes fs-1 fw-normal"></span>
-                            <small>Min</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid ps-3">
-                            <span class="seconds fs-1 fw-normal"></span>
-                            <small>Sec</small>
-                        </div>
-                    </div>
-                    <a href="shop.html" class="btn mt-3">Shop Collection</a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
+
     <section id="categories" class="padding-large pt-0">
         <div class="container">
             <div class="section-title overflow-hidden mb-4">

@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<script src="../../utils/checkin.js"></script>
 
 <body>
 
@@ -16,7 +17,6 @@
             <div class="col-md-8">
                 <?php
                 try {
-                    // Hàm fetching by id
                     function fetchDocumentById($id)
                     {
                         $url = 'http://localhost:8085/api/taiLieu_id=' . $id;
@@ -45,8 +45,7 @@
                                 <p>Nội dung: ' . $document['noiDung'] . '</p>
                                 <p>Số lượng còn lại: ' . $document['soLuongTon'] . '</p>
                                 <div class="d-flex justify-content-between">
-                                  
-                                    <a href="#" class="btn btn-success add-to-cart" data-id="' . $document['id'] . '">Thêm</a>
+                                    <a href="#" class="btn btn-success add-to-cart" data-id="' . $document['id'] . '">Thêm vào danh sách</a>
                                 </div>
                             </div>';
 
@@ -63,7 +62,6 @@
             </div>
         </div>
     </div>
-
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

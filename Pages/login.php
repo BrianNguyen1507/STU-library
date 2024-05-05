@@ -10,6 +10,7 @@
 </head>
 <script src="../utils/clear.js"></script>
 <script src="../utils/pop.js"></script>
+
 <body>
   <div class="center">
     <input type="checkbox" id="show" style="display: none;">
@@ -83,9 +84,6 @@
                 //phan trang
                 // } else if (response.role === "admin") {
                 //     window.location.href = "admin.php";
-              } else {
-                document.getElementById("status").innerText = "Unknown role";
-                document.getElementById("status").style.color = "red";
               }
             } else {
               document.getElementById("status").innerText = "Login failed";

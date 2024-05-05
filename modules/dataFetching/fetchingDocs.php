@@ -17,10 +17,17 @@ try {
                     <span class="price text-primary fw-bold mb-2 fs-5">' . $ele['soLuongTon'] . '</span>
                     <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                         <a href="#" class="btn btn-dark detail-link" data-id="' . $ele['id'] . '">Xem chi tiết</a>
+                        <a href="#" class="btn btn-dark add-link" data-id="' . $ele['id'] . '">Thêm</a>
                     </div>
                 </div>
             </div>';
         }
+
+        echo '<div class="pagination">';
+        echo '<a href="#" class="prevBtn">Previous</a>';
+        echo '<a href="#" class="nextBtn">Next</a>';
+        echo '</div>';
+
     }
 } catch (PDOException $err) {
     echo "<script>console.log('FAILED. Error: $err' );</script><br><br>";
