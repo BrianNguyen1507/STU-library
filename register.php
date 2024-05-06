@@ -5,11 +5,13 @@
   <meta charset="utf-8">
   <title>Registration Site</title>
   <!-- <link rel="icon" type="image/png" href="../assets/img/logo.png"> -->
-  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="./css/login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <script src="../utils/closed.js"></script>
+
 <body>
   <div class="center">
     <input type="checkbox" id="show" style="display: none;">
@@ -52,64 +54,51 @@
   </div>
 
   <script>
+    $(() => {
+      document.getElementById('show').checked = true;
+      sessionStorage.getItem("token") && (window.location.href = "index.php");
+    });
+
     function handleSubmitRegister(event) {
       event.preventDefault();
-      let username = document.getElementById("tenDangNhap").value;
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
-      let confirmPassword = document.getElementById("passwordConfirm").value;
-      let role = parseInt(document.getElementById("phanQuyenId").value);
+      const username = $("#tenDangNhap").val();
+      const email = $("#email").val();
+      const password = $("#password").val();
+      const confirmPassword = $("#passwordConfirm").val();
+      const role = $("#phanQuyenId").val();
 
-      let registrationData = {
+      sendRegistrationData({
         tenDangNhap: username,
         email: email,
         password: password,
         passwordConfirm: confirmPassword,
         phanQuyenId: role
-      };
-      sendRegistrationData(registrationData);
+      });
     }
 
 
     function sendRegistrationData(registrationData) {
-      fetch('../modules/register/handleRegister.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(registrationData),
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Server error');
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (data.httpCode === 200 && data.message === "Tao user thanh cong") {
-            setTimeout(() => {
-              window.location.href = "login.php";
-            }, 2000);
-            document.getElementById("status").innerText = data.message;
-            document.getElementById("status").style.color = "green";
-          } else {
-            console.error("Registration failed:", data.message);
-            document.getElementById("status").innerText = data.message;
-            document.getElementById("status").style.color = "red";
-          }
-        })
-        .catch(error => {
-          console.error("Error:", error.message);
-          document.getElementById("status").innerText = error.message;
-          document.getElementById("status").style.color = "red";
+      $.ajax({
+        url: 'http://localhost:8085/api/register',
+        type: 'POST',
+        data: JSON.stringify(registrationData),
+      }).done((data) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Đăng ký thành công!',
+          showConfirmButton: false,
+          timer: 1500
         });
+        setTimeout(() => {
+          window.location.href = "index.php";
+        }, 1500);
+      }).fail((data) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Đăng ký thất bại!',
+        })
+      });
     }
-
-  </script>
-
-  <script>
-    window.onload = function () {
-      document.getElementById('show').checked = true;
-    };
   </script>
 </body
