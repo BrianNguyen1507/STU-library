@@ -17,7 +17,7 @@ if (getToken) {
             var userInfo = data; 
             var userInfoHTML = '';
 
-            userInfoHTML += "<form id='user-update-form'>"; 
+            userInfoHTML += "<form id='user-update-form' onsubmit='handleUpdateSubmit(event)'>";
             userInfoHTML += "<div class='tab-content' id='nav-tabContent'>";
             userInfoHTML += "<div class='tab-pane fade active show' id='nav-sign-in' role='tabpanel' aria-labelledby='nav-sign-in-tab'>";
             userInfoHTML += "<div class='form-group py-3'>";
@@ -40,10 +40,13 @@ if (getToken) {
             userInfoHTML += "<input type='text' minlength='2' name='dienThoai' id='dienThoai' class='form-control w-100 rounded-3 p-3' value='"+ userInfo.dienThoai + "' required>";
             userInfoHTML += "</div>";
 
-            userInfoHTML += "<button type='submit' onclick='UpdateUsers(event)' class='btn btn-dark w-100 my-3'>Cập nhật</button>"; // Sửa type thành 'submit' và gọi hàm updateUserData(event)
+            userInfoHTML += "<div id='update-response'></div>"; 
+            userInfoHTML += "</div>";
+
+            userInfoHTML += "<button type='submit' class='btn btn-dark w-100 my-3'>Cập nhật</button>"; 
             userInfoHTML += "</div>";
             userInfoHTML += "</div>";
-            userInfoHTML += "</form>"; 
+            userInfoHTML += "</form>";  
 
             document.getElementById('user-info').innerHTML = userInfoHTML;
         })

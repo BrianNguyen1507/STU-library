@@ -22,6 +22,7 @@
 </head>
 <script src="utils/checkin.js"></script>
 
+
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -291,46 +292,57 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <script>
-                                        function UpdateUsers(event) {
-                                            event.preventDefault();
-                                            let token = sessionStorage.getItem("token");
-                                            let username = document.getElementById("username").value;
-                                            let diaChi = document.getElementById("diaChi").value;
-                                            let dienthoai = document.getElementById("dienthoai").value;
-                                            let updateData = {
-                                                username: username,
-                                                diaChi: diaChi,
-                                                dienthoai: dienthoai,
-                                            };
+                                    <script>
+                                    function handleUpdateSubmit(event) {
+                                        event.preventDefault();
 
-                                            sendUpdateData(updateData, token);
+                                        var confirmation = confirm("Are you sure you want to update?");
+                                        if (!confirmation) {
+                                            return; 
                                         }
+                                        let token = sessionStorage.getItem("token");
+                                        let username = document.getElementById("username").value;
+                                        let diaChi = document.getElementById("diaChi").value;
+                                        let dienthoai = document.getElementById("dienThoai").value;
+                                        var updateData = {
+                                            tenNguoiDung: username,
+                                            diaChi: diaChi,
+                                            dienThoai: dienthoai,
+                                        };
 
-                                        function sendUpdateData(updateData, token) {
-                                            var xhr = new XMLHttpRequest();
-                                            var url = 'modules/userData/updateUserData.php';
-                                            xhr.open("PUT", url, true);
-                                            xhr.setRequestHeader("Content-Type", "application/json");
-                                            xhr.setRequestHeader("Authorization", "Bearer " + token);
-                                            xhr.onreadystatechange = function () {
-                                                if (xhr.readyState === 4) {
-                                                    if (xhr.status === 200) {
-                                                        var response = JSON.parse(xhr.responseText);
-                                                        document.getElementById("status").innerText = "Success";
-                                                        document.getElementById("status").style.color = "green";
-                                                    } else {
-                                                        document.getElementById("status").innerText = "Server error";
-                                                        document.getElementById("status").style.color = "red";
-                                                    }
-                                                }
-                                            };
-                                            var jsonData = JSON.stringify(updateData);
-                                            console.log(jsonData);
-                                            xhr.send(jsonData);
-                                        }
+                                        var combinedData = {
+                                            token: token,
+                                            updateData: updateData,
+                                        };
+
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "modules/userData/updateUserData.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+
+                                        xhr.onload = function() {
+                                            if (xhr.status === 200) {
+                                                var response = JSON.parse(xhr.responseText);
+                                                var updateResponseElement = document.getElementById(
+                                                    "update-response");
+                                                updateResponseElement.innerHTML = "Update successful";
+                                                updateResponseElement.style.color = "green";
+                                                setTimeout(function() {
+                                                    window.location.reload();
+                                                }, 2000);
+                                                console.log("Update successful:", response);
+                                            } else {
+                                                console.error("Error occurred while updating:", xhr.statusText);
+                                            }
+                                        };
+
+                                        xhr.onerror = function() {
+                                            console.error("Request failed");
+                                        };
+
+                                        xhr.send(JSON.stringify(combinedData));
+                                    }
                                     </script>
- -->
+
                                 </li>
                                 <li class="wishlist-dropdown dropdown pe-3">
                                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button"
@@ -847,7 +859,7 @@
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
 </body>
