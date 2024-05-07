@@ -349,6 +349,7 @@
         <div class="container">
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                 <h3 class="d-flex align-items-center">DANH SÁCH TÀI LIỆU</h3>
+                <span class="btn" onClick="themTaiLieu()">Thêm tài liệu</span>
             </div>
             <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
                 <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
@@ -363,9 +364,6 @@
             <section id="best-items">
                 <div class="swiper product-swiper">
                     <div class="swiper-wrapper">
-                        <?php
-                        include("modules/dataFetching/fetchingDocs.php");
-                        ?>
                     </div>
                 </div>
             </section>
@@ -424,7 +422,7 @@
             </div>
             <div class="swiper testimonial-swiper ">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
+                    <!-- <div class="swiper-slide">
                         <div class="card position-relative text-left p-5 border rounded-3">
                             <blockquote>"I stumbled upon this bookstore while visiting the city, and it instantly became
                                 my favorite
@@ -450,7 +448,7 @@
                             </div>
                             <h5 class="mt-1 fw-normal">Emma Chamberlin</h5>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="swiper-slide">
                         <div class="card position-relative text-left p-5 border rounded-3">
                             <blockquote>"As an avid reader, I'm always on the lookout for new releases, and this
@@ -784,14 +782,146 @@
             </div>
         </div>
     </div>
-
+    <div class="swiper-slide">
+        <div class="card position-relative p-4 border rounded-3">
+            <img src="" class="img-fluid shadow-sm" alt="">
+            <h6 class="mt-4 mb-0 fw-bold"><a href="#" class="detail-link" data-id="">test</a></h6>
+            <p>Thể loại:</p>
+            <p>Nhà xuất bản:</p>
+            <p>Số lượng còn lại:</p>
+            <span class="price text-primary fw-bold mb-2 fs-5"></span>
+            <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                <a class="btn btn-dark detail-link" data-id="">Xem chi tiết</a>
+                <a class="btn btn-dark add-link" data-id="">Thêm</a>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script>
         $(() => {
-            !sessionStorage.getItem("token") && (window.location.href = "login.php");
+            const token = sessionStorage.getItem("token");
+            !token && (window.location.href = "login.php");
+
         });
+
+        const getTaiLieu = () => {
+            $(".product-swiper .swiper-wrapper").html("");
+            $.ajax({
+                url: "http://localhost:8085/api/filterTaiLieu",
+                type: "GET",
+                contentType: "application/json",
+            }).done((response) => {
+                const taiLieu = response.contents;
+                taiLieu.forEach((item) => {
+                    const taiLieuItem = `
+                        <div class="swiper-slide">
+                            <div class="card position-relative p-4 border rounded-3">
+                                <img src="${item.hinhAnhDaiDien}" class="img-fluid shadow-sm" alt="">
+                                <h6 class="mt-4 mb-0 fw-bold"><a href="#" class="detail-link" data-id="${item.id}">${item.tenTaiLieu}</a></h6>
+                                <p>Thể loại: ${item.theLoai}</p>
+                                <p>Nhà xuất bản: ${item.nhaXuatBan}</p>
+                                <p>Số lượng còn lại: ${item.soLuongTon}</p>
+                                <span class="price text-primary fw-bold mb-2 fs-5">${item.soLuongTon}</span>
+                                <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                    <a class="btn btn-dark detail-link" data-id="${item.id}">Xem chi tiết</a>
+                                    <a class="btn btn-dark add-link" data-id="${item.id}">Thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $(".product-swiper .swiper-wrapper").append(taiLieuItem);
+                });
+            }).fail((error) => {
+                console.log(error);
+            });
+        }
+
+        getTaiLieu();
+
+        const themTaiLieu = () => {
+            Swal.fire({
+                title: "Thêm tài liệu",
+                html: `
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Tên tài liệu</span>
+                        <input type="text" class="form-control" id="tenTaiLieu" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Tên tác giả</span>
+                        <input type="text" class="form-control" id="tenTacGia" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Ngôn ngữ</span>
+                        <input type="text" class="form-control" id="ngonNgu" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Thể loại</span>
+                        <input type="text" class="form-control" id="theLoai" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Nhà xuất bản</span>
+                        <input type="text" class="form-control" id="nhaXuatBan" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Nội dung</span>
+                        <input type="text" class="form-control" id="noiDung" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Số lương tồn</span>
+                        <input type="text" class="form-control" id="soLuongTon" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3">Hình ảnh đại diện</span>
+                        <input type="text" class="form-control" id="hinhAnhDaiDien" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: "Thêm tài liệu",
+                showLoaderOnConfirm: true,
+                preConfirm: async (login) => {
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const tenTaiLieu = $("#tenTaiLieu").val();
+                    const tenTacGia = $("#tenTacGia").val();
+                    const ngonNgu = $("#ngonNgu").val();
+                    const theLoai = $("#theLoai").val();
+                    const nhaXuatBan = $("#nhaXuatBan").val();
+                    const noiDung = $("#noiDung").val();
+                    const soLuongTon = $("#soLuongTon").val();
+                    const hinhAnhDaiDien = $("#hinhAnhDaiDien").val();
+                    $.ajax({
+                        url: "http://localhost:8085/api/createTaiLieu",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            tenTaiLieu,
+                            tenTacGia,
+                            ngonNgu,
+                            theLoai,
+                            nhaXuatBan,
+                            noiDung,
+                            soLuongTon,
+                            hinhAnhDaiDien
+                        })
+                    }).done((response) => {
+                        Swal.fire({
+                            icon: "success",
+                            title: `Tạo tài liệu thành công`,
+                        });
+                        getTaiLieu();
+                    }).fail((error) => {
+                        Swal.fire({
+                            icon: "error",
+                            title: `Tạo tài liệu thất bại`,
+                        });
+                    });
+                }
+            });
+        }
     </script>
 </body>
 
