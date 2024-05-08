@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sách Phiếu Mượn - Trả</title>
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .shadow-container {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <h1 class="text-center">Danh Sách Phiếu Mượn - Trả</h1>
+
+          <div class="card shadow-container">
+            <div class="card-body">
+              <form id="listForm">
+                <div class="form-group">
+                  <label for="listType">Chọn loại danh sách:</label>
+                  <select class="form-control" id="listType" name="listType">
+                    <option value="phieumuon">Danh Sách Phiếu Mượn</option>
+                    <option value="phieutra">Danh Sách Phiếu Trả</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Lấy danh sách
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="mt-4" id="listContainer" style="display: none">
+            <div class="card shadow-container">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Ngày Mượn</th>
+                        <th scope="col">Hạn Mượn</th>
+                        <th scope="col">Trạng thái mượn</th>
+                        <th scope="col">Tên Người Dùng</th>
+                        <th scope="col">Địa Chỉ</th>
+                        <th scope="col">Số Điện Thoại</th>
+                      </tr>
+                    </thead>
+                    <tbody id="list-phieu"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#listForm").submit(function (event) {
+          event.preventDefault();
+          const listType = $("#listType").val();
+          if (listType === "phieumuon") {
+            getPhieuMuon();
+          } else if (listType === "phieutra") {
+            getPhieuTra();
+          }
+        });
+
+        function getPhieuMuon() {
+          $.ajax({
+            url: "http://localhost:8085/api/filterPhieuMuon",
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+              displayList(response.contents);
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching users:", error);
+            },
+          });
+        }
+
+        function getPhieuTra() {
+          $.ajax({
+            url: "http://localhost:8085/api/filterPhieuTra",
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+              displayList(response.contents);
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching suppliers:", error);
+            },
+          });
+        }
+
+        function displayList(data) {
+          const list = $("#list-phieu");
+          list.empty();
+          data.forEach(function (item) {
+            const row = $("<tr>");
+            const idCell = $("<td>").text(item.id);
+            const ngayMuonCell = $("<td>").text(
+              formatDate(item.ngayMuon) || "Unknow"
+            );
+            const hanMuonCell = $("<td>").text(
+              formatDate(item.hanMuon) || "Unknow"
+            );
+            const trangthaiCell = $("<td>").text(item.xacNhanMuon ? 'Chưa xác nhận': 'Xác nhận' || "Unknow");
+            const tenNguoiDungCell = $("<td>").text(
+              item.nguoiDungDTO.tenNguoiDung || "Unknow"
+            );
+            const diaChiCell = $("<td>").text(
+              item.nguoiDungDTO.diaChi || "Unknow"
+            );
+            const dienThoaiCell = $("<td>").text(
+              item.nguoiDungDTO.dienThoai || "Unknow"
+            );
+            row.append(
+              idCell,
+              ngayMuonCell,
+              hanMuonCell,
+              trangthaiCell,
+              tenNguoiDungCell,
+              diaChiCell,
+              dienThoaiCell
+            );
+            list.append(row);
+          });
+          $("#listContainer").show();
+        }
+      });
+    </script>
+    <script src="../utils/format.js"></script>
+  </body>
+</html>

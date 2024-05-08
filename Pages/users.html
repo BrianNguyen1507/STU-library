@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sách</title>
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .shadow-container {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <h1 class="text-center">Danh Sách ND & NCC</h1>
+          <div class="card shadow-container">
+            <div class="card-body">
+              <form id="listForm">
+                <div class="mb-3">
+                  <label for="listType" class="form-label"
+                    >Chọn loại danh sách:</label
+                  >
+                  <select class="form-select" id="listType" name="listType">
+                    <option value="user">Danh sách Người Dùng</option>
+                    <option value="supplier">Danh sách Nhà Cung Cấp</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Lấy danh sách
+                </button>
+              </form>
+            </div>
+          </div>
+          <div
+            class="shadow-container mt-4"
+            id="listContainer"
+            style="display: none"
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Địa Chỉ</th>
+                  <th scope="col">Số Điện Thoại</th>
+                </tr>
+              </thead>
+              <tbody id="list"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#listForm").submit(function (event) {
+          event.preventDefault();
+          const listType = $("#listType").val();
+          if (listType === "user") {
+            getUsers();
+          } else if (listType === "supplier") {
+            getSuppliers();
+          }
+        });
+
+        function getUsers() {
+          $.ajax({
+            url: "http://localhost:8085/api/NguoiDung/filter",
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+              displayList(response.contents);
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching users:", error);
+            },
+          });
+        }
+
+        function getSuppliers() {
+          $.ajax({
+            url: "http://localhost:8085/api/filterNhaCungCap?keyword=hoanHao",
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+              displayList(response.contents);
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching suppliers:", error);
+            },
+          });
+        }
+
+        function displayList(data) {
+          const list = $("#list");
+          list.empty();
+          data.forEach(function (item) {
+            const row = $("<tr>");
+            const idCell = $("<td>").text(item.id);
+            const nameCell = $("<td>").text(
+              item.tenNguoiDung || item.tenNhaCungCap
+            );
+            const emailCell = $("<td>").text(item.email || "");
+            const addressCell = $("<td>").text(item.diaChi || "");
+            const phoneCell = $("<td>").text(item.dienThoai || "");
+            row.append(idCell, nameCell, emailCell, addressCell, phoneCell);
+            list.append(row);
+          });
+          $("#listContainer").show();
+        }
+      });
+    </script>
+  </body>
+</html>

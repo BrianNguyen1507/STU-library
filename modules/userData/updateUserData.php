@@ -1,5 +1,5 @@
 <?php
-function updateMovieFromPayload($payload)
+function updateUsers($payload)
 {
    
     $payloadData = json_decode($payload, true);
@@ -40,4 +40,4 @@ function updateMovieFromPayload($payload)
 
 $payload = file_get_contents('php://input');
 
-echo updateMovieFromPayload($payload);
+echo updateUsers($payload);
