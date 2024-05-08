@@ -18,7 +18,7 @@
   <body>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md">
           <h1 class="text-center">Danh Sách Phiếu Mượn - Trả</h1>
 
           <div class="card shadow-container">
@@ -41,7 +41,7 @@
           <div class="mt-4" id="listContainer" style="display: none">
             <div class="card shadow-container">
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow-y: auto">
                   <table class="table">
                     <thead>
                       <tr>
@@ -52,6 +52,7 @@
                         <th scope="col">Tên Người Dùng</th>
                         <th scope="col">Địa Chỉ</th>
                         <th scope="col">Số Điện Thoại</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody id="list-phieu"></tbody>
@@ -117,7 +118,11 @@
             const hanMuonCell = $("<td>").text(
               formatDate(item.hanMuon) || "Unknow"
             );
-            const trangthaiCell = $("<td>").text(item.xacNhanMuon ? 'Chưa xác nhận': 'Xác nhận' || "Unknow");
+            const trangthaiCell = $("<td>").text(
+              item.xacNhanMuon === true
+                ? "Xác nhận"
+                : "Chưa xác nhận" || "Unknow"
+            );
             const tenNguoiDungCell = $("<td>").text(
               item.nguoiDungDTO.tenNguoiDung || "Unknow"
             );
@@ -127,6 +132,15 @@
             const dienThoaiCell = $("<td>").text(
               item.nguoiDungDTO.dienThoai || "Unknow"
             );
+            const confirmButton = $("<button>")
+              .text("Xác nhận")
+              .addClass("btn btn-primary")
+              .click(function () {
+                //nhan nut
+              });
+
+            const confirmCell = $("<td>").append(confirmButton);
+
             row.append(
               idCell,
               ngayMuonCell,
@@ -134,7 +148,8 @@
               trangthaiCell,
               tenNguoiDungCell,
               diaChiCell,
-              dienThoaiCell
+              dienThoaiCell,
+              confirmCell
             );
             list.append(row);
           });
