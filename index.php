@@ -195,7 +195,7 @@
                             <li class="nav-item">
                                 <a class="nav-link me-4 active" href="index.php">Trang Chủ</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" id="menu-list">
                                 <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                     role="button" aria-expanded="false">Danh Sách</a>
                                 <ul class="dropdown-menu animate slide border">
@@ -213,7 +213,7 @@
                                 <a class="nav-link me-4" href="contact.html">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4 active" href="#" onclick="logout()">Đăng Xuất</a>
+                                <a class="nav-link me-4 " href="#" onclick="logout()">Đăng Xuất</a>
                             </li>
 
                         </ul>
@@ -260,54 +260,54 @@
                                         </div>
                                     </div>
                                     <script>
-                                        function handleUpdateSubmit(event) {
-                                            event.preventDefault();
+                                    function handleUpdateSubmit(event) {
+                                        event.preventDefault();
 
-                                            var confirmation = confirm("Are you sure you want to update?");
-                                            if (!confirmation) {
-                                                return;
-                                            }
-                                            let token = sessionStorage.getItem("token");
-                                            let username = document.getElementById("username").value;
-                                            let diaChi = document.getElementById("diaChi").value;
-                                            let dienthoai = document.getElementById("dienThoai").value;
-                                            var updateData = {
-                                                tenNguoiDung: username,
-                                                diaChi: diaChi,
-                                                dienThoai: dienthoai,
-                                            };
-
-                                            var combinedData = {
-                                                token: token,
-                                                updateData: updateData,
-                                            };
-
-                                            var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "modules/userData/updateUserData.php", true);
-                                            xhr.setRequestHeader("Content-Type", "application/json");
-
-                                            xhr.onload = function () {
-                                                if (xhr.status === 200) {
-                                                    var response = JSON.parse(xhr.responseText);
-                                                    var updateResponseElement = document.getElementById(
-                                                        "update-response");
-                                                    updateResponseElement.innerHTML = "Update successful";
-                                                    updateResponseElement.style.color = "green";
-                                                    setTimeout(function () {
-                                                        window.location.reload();
-                                                    }, 2000);
-                                                    console.log("Update successful:", response);
-                                                } else {
-                                                    console.error("Error occurred while updating:", xhr.statusText);
-                                                }
-                                            };
-
-                                            xhr.onerror = function () {
-                                                console.error("Request failed");
-                                            };
-
-                                            xhr.send(JSON.stringify(combinedData));
+                                        var confirmation = confirm("Are you sure you want to update?");
+                                        if (!confirmation) {
+                                            return;
                                         }
+                                        let token = sessionStorage.getItem("token");
+                                        let username = document.getElementById("username").value;
+                                        let diaChi = document.getElementById("diaChi").value;
+                                        let dienthoai = document.getElementById("dienThoai").value;
+                                        var updateData = {
+                                            tenNguoiDung: username,
+                                            diaChi: diaChi,
+                                            dienThoai: dienthoai,
+                                        };
+
+                                        var combinedData = {
+                                            token: token,
+                                            updateData: updateData,
+                                        };
+
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "modules/userData/updateUserData.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+
+                                        xhr.onload = function() {
+                                            if (xhr.status === 200) {
+                                                var response = JSON.parse(xhr.responseText);
+                                                var updateResponseElement = document.getElementById(
+                                                    "update-response");
+                                                updateResponseElement.innerHTML = "Update successful";
+                                                updateResponseElement.style.color = "green";
+                                                setTimeout(function() {
+                                                    window.location.reload();
+                                                }, 2000);
+                                                console.log("Update successful:", response);
+                                            } else {
+                                                console.error("Error occurred while updating:", xhr.statusText);
+                                            }
+                                        };
+
+                                        xhr.onerror = function() {
+                                            console.error("Request failed");
+                                        };
+
+                                        xhr.send(JSON.stringify(combinedData));
+                                    }
                                     </script>
 
                                 </li>
@@ -321,43 +321,11 @@
                                     <div
                                         class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="text-primary">Danh sách đã thêm</span>
-                                            <span class="badge bg-primary rounded-pill">2</span>
+                                            <span class="text-primary">Danh Sách Phiếu Mượn</span>
                                         </h4>
-                                        <ul class="list-group mb-3">
-                                            <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single-product.html">The Emerald Crown</a>
-                                                    </h5>
-                                                    <small>Special discounted price.</small>
-                                                    <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to
-                                                        cart</a>
-                                                </div>
-                                                <span class="text-primary">$2000</span>
-                                            </li>
-                                            <li
-                                                class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single-product.html">The Last Enchantment</a>
-                                                    </h5>
-                                                    <small>Perfect for enlightened people.</small>
-                                                    <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to
-                                                        cart</a>
-                                                </div>
-                                                <span class="text-primary">$400</span>
-                                            </li>
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between">
-                                                <span class="text-capitalize"><b>Total (USD)</b></span>
-                                                <strong>$1470</strong>
-                                            </li>
+                                        <ul class="list-group mb-3 custom-class">
+
                                         </ul>
-                                        <div class="d-flex flex-wrap justify-content-center">
-                                            <a href="cart.html" class="w-100 btn btn-primary" type="submit">Xem chi tiết
-                                                danh sách</a>
-                                        </div>
                                     </div>
                                 </li>
 
@@ -374,10 +342,13 @@
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                 <h3 class="d-flex align-items-center">DANH SÁCH TÀI LIỆU</h3>
                 <div>
-                    <span class="btn btn-primary" onClick="themTaiLieu()">Thêm tài liệu</span>
-                    <span class="btn btn-primary" onClick="themNhaCungCap()">Thêm Nhà Cung Cấp</span>
-                    <span class="btn btn-primary" onClick="taoPhieuMuon()">Tạo phiếu mượn</span>
+                    <span id="themTaiLieuBtn" class="btn btn-primary" onClick="themTaiLieu()">Thêm tài liệu</span>
+                    <span id="themNhaCungCapBtn" class="btn btn-primary" onClick="themNhaCungCap()">Thêm Nhà Cung
+                        Cấp</span>
+                    <span id="TaoPhieuMuonBtn" class="btn btn-primary" onClick="taoPhieuMuon()">Tạo phiếu mượn</span>
                 </div>
+
+
             </div>
 
             <div
@@ -825,42 +796,28 @@
             </div>
         </div>
     </div>
-    <div class="swiper-slide">
-        <div class="card position-relative p-4 border rounded-3">
-            <img src="" class="img-fluid shadow-sm" alt="">
-            <h6 class="mt-4 mb-0 fw-bold"><a href="#" class="detail-link" data-id="">test</a></h6>
-            <p>Thể loại:</p>
-            <p>Nhà xuất bản:</p>
-            <p>Số lượng còn lại:</p>
-            <span class="price text-primary fw-bold mb-2 fs-5"></span>
-            <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                <a class="btn btn-dark detail-link" data-id="">Xem chi tiết</a>
-                <a class="btn btn-dark add-link" data-id="">Thêm</a>
-            </div>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script>
-        $(() => {
-            const token = sessionStorage.getItem("token");
-            !token && (window.location.href = "login.php");
+    $(() => {
+        const token = sessionStorage.getItem("token");
+        !token && (window.location.href = "login.php");
 
-        });
+    });
 
-        const getTaiLieu = () => {
-            $(".product-swiper .swiper-wrapper").html("");
-            $.ajax({
-                url: "http://localhost:8085/api/filterTaiLieu",
-                type: "GET",
-                contentType: "application/json",
-            }).done((response) => {
-                const taiLieu = response.contents;
-                taiLieu.forEach((item) => {
-                    const taiLieuItem = `
+    const getTaiLieu = () => {
+        $(".product-swiper .swiper-wrapper").html("");
+        $.ajax({
+            url: "http://localhost:8085/api/filterTaiLieu",
+            type: "GET",
+            contentType: "application/json",
+        }).done((response) => {
+            const taiLieu = response.contents;
+            taiLieu.forEach((item) => {
+                const taiLieuItem = `
                         <div class="swiper-slide">
                             <div class="card position-relative p-4 border rounded-3">
                                 <img src="${item.hinhAnhDaiDien}" class="img-fluid shadow-sm" alt="">
@@ -871,30 +828,28 @@
                                 <span class="price text-primary fw-bold mb-2 fs-5">${item.soLuongTon}</span>
                                 <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                     <a class="btn btn-dark detail-link" data-id="${item.id}" onClick="chiTietTaiLieu(this);">Xem chi tiết</a>
-                                    <a class="btn btn-dark add-link" data-id="${item.id}">Thêm</a>
+                                    <a class="btn btn-dark add-link" data-id="${item.id}" onClick="chonPhieuMuon(this.getAttribute('data-id'))">Thêm</a>
                                 </div>
                             </div>
                         </div>
                     `;
-                    $(".product-swiper .swiper-wrapper").append(taiLieuItem);
-                });
-            }).fail((error) => {
-                console.log(error);
+                $(".product-swiper .swiper-wrapper").append(taiLieuItem);
             });
-        }
+        }).fail((error) => {
+            console.log(error);
+        });
+    }
+    getTaiLieu();
+    const chiTietTaiLieu = (e) => {
+        const id = $(e).data("id");
 
-        getTaiLieu();
-
-        const chiTietTaiLieu = (e) => {
-            const id = $(e).data("id");
-
-            $.ajax({
-                url: `http://localhost:8085/api/taiLieu_id=${id}`,
-                type: "GET",
-            }).done((data) => {
-                Swal.fire({
-                    title: data.tenTaiLieu,
-                    html: `
+        $.ajax({
+            url: `http://localhost:8085/api/taiLieu_id=${id}`,
+            type: "GET",
+        }).done((data) => {
+            Swal.fire({
+                title: data.tenTaiLieu,
+                html: `
                     <img src="${data.hinhAnhDaiDien}" class="img-fluid shadow-sm" alt="${data.tenTaiLieu}">
                     <p>Tác giả: ${data.tenTacGia}</p>
                     <p>Ngôn ngữ: ${data.ngonNgu}</p>
@@ -903,20 +858,19 @@
                     <p>Nội dung: ${data.noiDung}</p>
                     <p>Số lượng còn lại: ${data.soLuongTon}</p>
                 `,
-                });
-            }).fail((err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: id,
-                });
             });
-        };
-
-        const themTaiLieu = () => {
+        }).fail((err) => {
             Swal.fire({
-                title: "Thêm tài liệu",
-                html: `
+                icon: 'error',
+                title: 'Oops...',
+                text: id,
+            });
+        });
+    };
+    const themTaiLieu = () => {
+        Swal.fire({
+            title: "Thêm tài liệu",
+            html: `
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon3">Tên tài liệu</span>
                         <input type="text" class="form-control" id="tenTaiLieu" aria-describedby="basic-addon3 basic-addon4">
@@ -950,55 +904,54 @@
                         <input type="text" class="form-control" id="hinhAnhDaiDien" aria-describedby="basic-addon3 basic-addon4">
                     </div>
                 `,
-                showCancelButton: true,
-                confirmButtonText: "Thêm tài liệu",
-                showLoaderOnConfirm: true,
-                preConfirm: async (login) => { },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const tenTaiLieu = $("#tenTaiLieu").val();
-                    const tenTacGia = $("#tenTacGia").val();
-                    const ngonNgu = $("#ngonNgu").val();
-                    const theLoai = $("#theLoai").val();
-                    const nhaXuatBan = $("#nhaXuatBan").val();
-                    const noiDung = $("#noiDung").val();
-                    const soLuongTon = $("#soLuongTon").val();
-                    const hinhAnhDaiDien = $("#hinhAnhDaiDien").val();
-                    $.ajax({
-                        url: "http://localhost:8085/api/createTaiLieu",
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            tenTaiLieu,
-                            tenTacGia,
-                            ngonNgu,
-                            theLoai,
-                            nhaXuatBan,
-                            noiDung,
-                            soLuongTon,
-                            hinhAnhDaiDien
-                        })
-                    }).done((response) => {
-                        Swal.fire({
-                            icon: "success",
-                            title: `Tạo tài liệu thành công`,
-                        });
-                        getTaiLieu();
-                    }).fail((error) => {
-                        Swal.fire({
-                            icon: "error",
-                            title: `Tạo tài liệu thất bại`,
-                        });
+            showCancelButton: true,
+            confirmButtonText: "Thêm tài liệu",
+            showLoaderOnConfirm: true,
+            preConfirm: async (login) => {},
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const tenTaiLieu = $("#tenTaiLieu").val();
+                const tenTacGia = $("#tenTacGia").val();
+                const ngonNgu = $("#ngonNgu").val();
+                const theLoai = $("#theLoai").val();
+                const nhaXuatBan = $("#nhaXuatBan").val();
+                const noiDung = $("#noiDung").val();
+                const soLuongTon = $("#soLuongTon").val();
+                const hinhAnhDaiDien = $("#hinhAnhDaiDien").val();
+                $.ajax({
+                    url: "http://localhost:8085/api/createTaiLieu",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        tenTaiLieu,
+                        tenTacGia,
+                        ngonNgu,
+                        theLoai,
+                        nhaXuatBan,
+                        noiDung,
+                        soLuongTon,
+                        hinhAnhDaiDien
+                    })
+                }).done((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: `Tạo tài liệu thành công`,
                     });
-                }
-            });
-        }
+                }).fail((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Tạo tài liệu thất bại`,
+                    });
+                });
+            }
+        });
+    }
 
-        const themNhaCungCap = () => {
-            Swal.fire({
-                title: "Thêm Nhà Cung Cấp",
-                html: `
+    const themNhaCungCap = () => {
+        Swal.fire({
+            title: "Thêm Nhà Cung Cấp",
+            html: `
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon3">Tên Nhà Cung Cấp</span>
                 <input type="text" class="form-control" id="tenNhaCungCap" aria-describedby="basic-addon3 basic-addon4">
@@ -1016,86 +969,199 @@
                 <input type="text" class="form-control" id="phonenumber" aria-describedby="basic-addon3 basic-addon4">
             </div>
         `,
-                showCancelButton: true,
-                confirmButtonText: "Thêm Nhà Cung Cấp",
-                showLoaderOnConfirm: true,
-                preConfirm: async (login) => { },
-                allowOutsideClick: () => !Swal.isLoading()
+            showCancelButton: true,
+            confirmButtonText: "Thêm Nhà Cung Cấp",
+            showLoaderOnConfirm: true,
+            preConfirm: async (login) => {},
+            allowOutsideClick: () => !Swal.isLoading()
 
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const tenNhaCungCap = $("#tenNhaCungCap").val();
-                    const email = $("#email").val();
-                    const diaChi = $("#diaChi").val();
-                    const dienThoai = $("#phonenumber").val();
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const tenNhaCungCap = $("#tenNhaCungCap").val();
+                const email = $("#email").val();
+                const diaChi = $("#diaChi").val();
+                const dienThoai = $("#phonenumber").val();
 
-                    $.ajax({
-                        url: "http://localhost:8085/api/createNhaCungCap",
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            tenNhaCungCap,
-                            email,
-                            diaChi,
-                            dienThoai,
-                        })
-                    }).done((response) => {
+                $.ajax({
+                    url: "http://localhost:8085/api/createNhaCungCap",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        tenNhaCungCap,
+                        email,
+                        diaChi,
+                        dienThoai,
+                    })
+                }).done((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: `Thêm nhà cung cấp mới thành công`,
+                    });
+
+                }).fail((xhr) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Thêm nhà cung cấp thất bại`,
+                    });
+
+                });
+            }
+        });
+    }
+
+
+
+    const taoPhieuMuon = () => {
+        Swal.fire({
+            title: "Bạn muốn tạo phiếu mượn?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const token = sessionStorage.getItem('token');
+                const headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                };
+
+                $.ajax({
+                    url: "http://localhost:8085/api/addPhieuMuon",
+                    type: "POST",
+                    headers: headers,
+                    contentType: "application/json",
+                    data: JSON.stringify({}),
+                    success: function(response) {
                         Swal.fire({
                             icon: "success",
-                            title: `Thêm nhà cung cấp mới thành công`,
+                            title: `Tạo phiếu mượn thành công`,
                         });
-
-                    }).fail((xhr) => {
+                        getPhieuMuon();
+                    },
+                    error: function(xhr, status, error) {
                         Swal.fire({
                             icon: "error",
-                            title: `Thêm nhà cung cấp thất bại`,
+                            title: `Tạo phiếu mượn thất bại`,
                         });
+                    }
+                });
+            }
+        });
+    }
 
-                    });
-                }
+
+    const getPhieuMuon = () => {
+        const token = sessionStorage.getItem('token');
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        $.ajax({
+            url: "http://localhost:8085/api/getPhieuMuonAuthentication",
+            type: "GET",
+            headers: headers,
+            contentType: "application/json",
+        }).done((response) => {
+            const phieuMuonItems = response.map((phieuMuon) => {
+                return `
+        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm" data-phieu-muon-id="${phieuMuon.id}">
+            <div>
+                <h5>
+                    <a href="">Phiếu Mượn Số: ${phieuMuon.id}</a>
+                </h5>
+                <h6>Ngày mượn: <span><small> ${phieuMuon.ngayMuon ? phieuMuon.ngayMuon : 'Chưa có dữ liệu'}</small></span></h6>
+                <h6>Hạn mượn:<span><small> ${phieuMuon.hanMuon ? phieuMuon.hanMuon : 'Chưa có dữ liệu'}</small></span></h6>
+                <h6>Trạng thái mượn:  <span><small>${phieuMuon.xacNhanMuon === true ? 'Đã xác nhận' : 'Chưa xác nhận'}</small></span> </h6>
+            </div>
+            <button id="button-hit" style="padding: 10px 10px;" class="btn btn-primary btn-select"  data-phieumuon="${phieuMuon.id}" onClick="addTaiLieu(this.getAttribute('data-phieumuon'))">Chọn</button>
+        </li>
+    `;
+            }).join('');
+            $('.list-PhieuMuon , .custom-class').html(phieuMuonItems);
+            $('.custom-class #button-hit').hide();
+        }).fail((error) => {
+            console.log(error);
+        });
+    }
+    getPhieuMuon();
+
+    let selectedTaiLieuId = null;
+    const chonPhieuMuon = (taiLieuId) => {
+        console.log(taiLieuId);
+        selectedTaiLieuId = taiLieuId;
+
+        getPhieuMuon();
+        Swal.fire({
+            title: "Chọn Phiếu Mượn",
+            html: `
+            <ul class="list-group mb-3 list-PhieuMuon"></ul>
+        `,
+            showCancelButton: true,
+            showConfirmButton: false
+        });
+    }
+
+    const addTaiLieu = (phieuMuonId) => {
+        if (selectedTaiLieuId != null) {
+            const token = sessionStorage.getItem('token');
+            const headers = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            };
+
+            const requestBody = JSON.stringify({
+                "phieuMuonId": phieuMuonId,
+                "taiLieuId": selectedTaiLieuId
             });
-        }
 
+            $.ajax({
+                url: `http://localhost:8085/api/addTaiLieutoPhieuMuon?phieuMuonId=${phieuMuonId}&taiLieuId=${selectedTaiLieuId}`,
+                type: "POST",
+                headers: headers,
+                contentType: "application/json",
+                data: requestBody,
+            }).done(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: `Thêm Tài Liệu vào Phiếu Mượn thành công!`,
+                });
+            }).fail((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: `Thêm Tài Liệu vào Phiếu Mượn thất bại!`,
+                });
 
-
-        const taoPhieuMuon = () => {
-            Swal.fire({
-                title: "Bạn muốn tạo phiếu mượn?",
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "OK"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const token = sessionStorage.getItem('token');
-                    const headers = {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    };
-
-                    $.ajax({
-                        url: "http://localhost:8085/api/addPhieuMuon",
-                        type: "POST",
-                        headers: headers,
-                        contentType: "application/json",
-                        data: JSON.stringify({}),
-                        success: function (response) {
-                            Swal.fire({
-                                icon: "success",
-                                title: `Tạo phiếu mượn thành công`,
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            Swal.fire({
-                                icon: "error",
-                                title: `Tạo phiếu mượn thất bại`,
-                            });
-                        }
-                    });
-                }
             });
+        } else {
+            console.log("Không có tài liệu được chọn.");
+
         }
+    };
+
+    function checkUserRole() {
+        const userRole = sessionStorage.getItem('role');
+        const list = document.getElementById('menu-list');
+        const themPhieuMuon = document.getElementById('themPhieuMuonBtn');
+        const taoPhieuMuonBtn = document.getElementById('TaoPhieuMuonBtn');
+        const themTaiLieuBtn = document.getElementById('themTaiLieuBtn');
+        const themNhaCungCapBtn = document.getElementById('themNhaCungCapBtn');
+        if (userRole === 'Role_Admin' || userRole === 'Role_LibraryManager') {
+            themTaiLieuBtn.style.display = 'inline-block';
+            themNhaCungCapBtn.style.display = 'inline-block';
+            list.style.display = 'inline-block';
+            taoPhieuMuonBtn.style.display = 'none';
+            themPhieuMuon.style.display = 'none';
+        } else {
+            themTaiLieuBtn.style.display = 'none';
+            themNhaCungCapBtn.style.display = 'none';
+            list.style.display = 'none';
+            taoPhieuMuonBtn.style.display = 'inline-block';
+            themPhieuMuon.style.display = 'inline-block';
+        }
+    }
+    checkUserRole();
     </script>
     <script src="utils/logout.js"></script>
 </body>

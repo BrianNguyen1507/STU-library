@@ -2,7 +2,7 @@
 
 function register($username, $email, $password, $repassword, $role)
 {
-   
+
     if ($password !== $repassword) {
         return json_encode(array('fail' => false, 'message' => 'Xác nhận mật khẩu không khớp với mật khẩu. Vui lòng kiểm tra lại!'));
     }
@@ -31,7 +31,7 @@ function register($username, $email, $password, $repassword, $role)
 
 
     if ($response === false) {
-    
+
         return json_encode(array('success' => false, 'message' => 'Error registering user'));
     }
     return $response;

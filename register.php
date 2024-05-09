@@ -7,7 +7,9 @@
   <!-- <link rel="icon" type="image/png" href="../assets/img/logo.png"> -->
   <link rel="stylesheet" href="./css/login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <script src="../utils/closed.js"></script>
@@ -38,8 +40,8 @@
           <input type="password" required id="passwordConfirm" name="passwordConfirm" placeholder="Xác nhận mật khẩu">
         </div>
         <div class="data">
-          <label>Role</label>
-          <input type="text" required id="phanQuyenId" name="phanQuyenId" placeholder="Role">
+          <input type="number" style="display:none " disabled required id="phanQuyenId" name="phanQuyenId" value="123">
+
         </div>
         <div id="status"></div>
         <div class="btn">
@@ -65,7 +67,7 @@
       const email = $("#email").val();
       const password = $("#password").val();
       const confirmPassword = $("#passwordConfirm").val();
-      const role = $("#phanQuyenId").val();
+      const role = 3;
 
       sendRegistrationData({
         tenDangNhap: username,
@@ -79,7 +81,7 @@
 
     function sendRegistrationData(registrationData) {
       $.ajax({
-        url: 'http://localhost:8085/api/register',
+        url: 'modules/register/handleRegister.php',
         type: 'POST',
         data: JSON.stringify(registrationData),
       }).done((data) => {
@@ -90,7 +92,7 @@
           timer: 1500
         });
         setTimeout(() => {
-          window.location.href = "index.php";
+          window.location.href = "login.php";
         }, 1500);
       }).fail((data) => {
         Swal.fire({
