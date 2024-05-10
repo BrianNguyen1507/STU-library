@@ -113,10 +113,14 @@
             const row = $("<tr>");
             const idCell = $("<td>").text(item.id);
             const ngayMuonCell = $("<td>").text(
-              formatDate(item.ngayMuon) || "Unknow"
+              !isNaN(Date.parse(item.ngayMuon))
+                ? formatDate(item.ngayMuon)
+                : "Unknown"
             );
             const hanMuonCell = $("<td>").text(
-              formatDate(item.hanMuon) || "Unknow"
+              !isNaN(Date.parse(item.hanMuon))
+                ? formatDate(item.hanMuon)
+                : "Unknown"
             );
             const trangthaiCell = $("<td>").text(
               item.xacNhanMuon === true

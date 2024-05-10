@@ -40,9 +40,13 @@
           <input type="password" required id="passwordConfirm" name="passwordConfirm" placeholder="Xác nhận mật khẩu">
         </div>
         <div class="data">
-          <input type="number" style="display:none " disabled required id="phanQuyenId" name="phanQuyenId" value="123">
-
+          <label>Chức vụ</label>
+          <select id="phanQuyenId" name="phanQuyenId" class="select-pretty">
+            <option value="4">Sinh Viên</option>
+            <option value="3">Giảng Viên</option>
+          </select>
         </div>
+
         <div id="status"></div>
         <div class="btn">
           <div class="inner"></div>
@@ -67,7 +71,7 @@
       const email = $("#email").val();
       const password = $("#password").val();
       const confirmPassword = $("#passwordConfirm").val();
-      const role = 3;
+      const role = $("#phanQuyenId").val();;
 
       sendRegistrationData({
         tenDangNhap: username,
