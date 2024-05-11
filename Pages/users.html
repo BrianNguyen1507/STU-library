@@ -32,9 +32,11 @@
                     <option value="supplier">Danh sách Nhà Cung Cấp</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                  Lấy danh sách
-                </button>
+                <div class="mb-3">
+                  <button type="submit" class="btn btn-primary">
+                    Lấy danh sách
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -100,7 +102,6 @@
             },
           });
         }
-
         function displayList(data) {
           const list = $("#list");
           list.empty();

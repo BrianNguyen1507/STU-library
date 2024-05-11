@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Danh Sách Phiếu Mượn - Trả</title>
-
+    <link rel="stylesheet" href="../css/common.css" />
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -37,7 +37,12 @@
               </form>
             </div>
           </div>
-
+          <div class="mt-4">
+            <form id="searchForm">
+              <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
+              <button id="searchButton" type="submit">Tìm</button>
+            </form>
+          </div>
           <div class="mt-4" id="listContainer" style="display: none">
             <div class="card shadow-container">
               <div class="card-body">
@@ -61,26 +66,90 @@
               </div>
             </div>
           </div>
+          <div class="mt-4" id="listContainerTra" style="display: none">
+            <div class="card shadow-container">
+              <div class="card-body">
+                <div class="table-responsive" style="overflow-y: auto">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Ngày Trả</th>
+                        <th scope="col">Tiền Phạt</th>
+                        <th scope="col">Tên Thủ Thư Xác nhận</th>
+                        <th scope="col">Tên Người Dùng</th>
+                        <th scope="col">Địa Chỉ</th>
+                        <th scope="col">Số Điện Thoại</th>
+                      </tr>
+                    </thead>
+                    <tbody id="list-phieu-tra"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="../utils/format.js"></script>
     <script>
       $(document).ready(function () {
         $("#listForm").submit(function (event) {
           event.preventDefault();
           const listType = $("#listType").val();
           if (listType === "phieumuon") {
+            $("#listContainer").show();
+            $("#listContainerTra").hide();
             getPhieuMuon();
           } else if (listType === "phieutra") {
+            $("#listContainer").hide();
+            $("#listContainerTra").show();
             getPhieuTra();
           }
         });
+        $("#searchForm").submit(function (event) {
+          event.preventDefault();
+          const keyword = $("#searchInput").val();
+          const listType = $("#listType").val();
+          if (listType === "phieumuon") {
+            $("#listContainer").show();
+            $("#listContainerTra").hide();
+            getPhieuMuon(keyword);
+          } else if (listType === "phieutra") {
+            $("#listContainer").hide();
+            $("#listContainerTra").show();
+            getPhieuTra(keyword);
+          }
+        });
 
-        function getPhieuMuon() {
+        function getPhieuTra(keyword) {
+          const url = keyword
+            ? `http://localhost:8085/api/filterPhieuTraSach?keyword=${keyword}`
+            : "http://localhost:8085/api/filterPhieuTraSach";
+
           $.ajax({
-            url: "http://localhost:8085/api/filterPhieuMuon",
+            url: url,
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+              displayListTra(response.contents);
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching users:", error);
+            },
+          });
+        }
+
+        function getPhieuMuon(keyword) {
+          const url = keyword
+            ? `http://localhost:8085/api/filterPhieuMuon?keyword=${keyword}`
+            : "http://localhost:8085/api/filterPhieuMuon";
+
+          $.ajax({
+            url: url,
             type: "GET",
             contentType: "application/json",
             success: function (response) {
@@ -92,21 +161,53 @@
           });
         }
 
-        function getPhieuTra() {
+        function xacNhanMuon(idPhieuMuon) {
           $.ajax({
-            url: "http://localhost:8085/api/filterPhieuTra",
-            type: "GET",
+            url: `http://localhost:8085/api/xacNhanPhieuMuon/phieuMuonId=${idPhieuMuon}`,
+            type: "PUT",
             contentType: "application/json",
-            success: function (response) {
+          })
+            .done(function (response) {
               displayList(response.contents);
-            },
-            error: function (xhr, status, error) {
-              console.error("Error fetching suppliers:", error);
-            },
-          });
+              Swal.fire({
+                icon: "success",
+                title: "Xác nhận mượn thành công",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            })
+            .fail(function (xhr, status, error) {
+              console.error("Error:", error);
+            });
         }
-
+        function taoPhieuTra(phieuMuonId) {
+          const token = sessionStorage.getItem("token");
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          };
+          $.ajax({
+            url: `http://localhost:8085/api/addPhieuTraSach/phieuMuonId=${phieuMuonId}`,
+            type: "POST",
+            headers: headers,
+            contentType: "application/json",
+          })
+            .done(() => {
+              Swal.fire({
+                icon: "success",
+                title: `Tạo Phiếu Trả cho Phiếu mượn ${phieuMuonId} Thành Công!`,
+              });
+            })
+            .fail((error) => {
+              Swal.fire({
+                icon: "error",
+                title: `Tạo Phiếu Trả thất bại!`,
+              });
+            });
+        }
         function displayList(data) {
+          let role = sessionStorage.getItem("role");
+
           const list = $("#list-phieu");
           list.empty();
           data.forEach(function (item) {
@@ -123,28 +224,71 @@
                 : "Unknown"
             );
             const trangthaiCell = $("<td>").text(
-              item.xacNhanMuon === true
-                ? "Xác nhận"
-                : "Chưa xác nhận" || "Unknow"
+              item.xacNhanMuon === "true" ? "Đã xác nhận" : "Chưa xác nhận"
             );
             const tenNguoiDungCell = $("<td>").text(
-              item.nguoiDungDTO.tenNguoiDung || "Unknow"
+              item.nguoiDungDTO.tenNguoiDung || "Unknown"
             );
             const diaChiCell = $("<td>").text(
-              item.nguoiDungDTO.diaChi || "Unknow"
+              item.nguoiDungDTO.diaChi || "Unknown"
             );
             const dienThoaiCell = $("<td>").text(
-              item.nguoiDungDTO.dienThoai || "Unknow"
+              item.nguoiDungDTO.dienThoai || "Unknown"
             );
             const confirmButton = $("<button>")
               .text("Xác nhận")
-              .addClass("btn btn-primary")
+              .addClass("btn btn-primary confirm-button")
               .click(function () {
-                //nhan nut
+                Swal.fire({
+                  title: "Xác nhận",
+                  text: `Bạn có chắc xác nhận Phiếu mượn ${item.id} ?`,
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Xác nhận",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    xacNhanMuon(item.id);
+                  }
+                });
               });
+            const returnButton = $("<button>")
+              .text("Tạo Phiếu Trả")
+              .addClass("btn btn-primary confirm-button")
+              .click(function () {
+                Swal.fire({
+                  title: "Xác nhân Trả",
+                  text: `Tạo Phiếu Trả cho người dùng ${item.nguoiDungDTO.tenNguoiDung} \n với số phiếu mượn: ${item.id}?`,
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Xác nhận",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    taoPhieuTra(item.id);
+                  }
+                });
+              });
+            if (role !== "Role_LibraryManager") {
+              confirmButton.hide();
+              returnButton.hide();
+            } else {
+              if (item.xacNhanMuon === "true") {
+                confirmButton.hide();
+                returnButton.show();
+              } else {
+                confirmButton.show();
+                returnButton.hide();
+              }
+            }
 
             const confirmCell = $("<td>").append(confirmButton);
-
+            const returnCell = $("<td>").append(returnButton);
+            row.click(function () {
+              $(".selected-row").removeClass("selected-row");
+              row.addClass("selected-row");
+              const getid = item.id;
+            });
             row.append(
               idCell,
               ngayMuonCell,
@@ -153,14 +297,58 @@
               tenNguoiDungCell,
               diaChiCell,
               dienThoaiCell,
-              confirmCell
+              confirmCell,
+              returnCell
             );
             list.append(row);
           });
           $("#listContainer").show();
         }
       });
+      function displayListTra(data) {
+        const list = $("#list-phieu-tra");
+        list.empty();
+        data.forEach(function (item) {
+          const row = $("<tr>");
+          const idCell = $("<td>").text(item.id);
+          const ngayTra = $("<td>").text(
+            !isNaN(Date.parse(item.ngayTra))
+              ? formatDate(item.ngayTra)
+              : "Unknown"
+          );
+          const tienPhatCell = $("<td>").text(item.tienPhat || 0.0);
+
+          const tenThuThuCell = $("<td>").text(
+            item.thuThuXacNhanPhieuTra.tenNguoiDung || "Unknown"
+          );
+          const tenNguoiDung = $("<td>").text(
+            item.phieuMuonDTO.nguoiDungDTO.tenNguoiDung || "Unknown"
+          );
+          const diaChiCell = $("<td>").text(
+            item.phieuMuonDTO.nguoiDungDTO.diaChi || "Unknown"
+          );
+          const dienThoaiCell = $("<td>").text(
+            item.phieuMuonDTO.nguoiDungDTO.dienThoai || "Unknown"
+          );
+
+          row.append(
+            idCell,
+            ngayTra,
+            tienPhatCell,
+            tenThuThuCell,
+            tenNguoiDung,
+            diaChiCell,
+            dienThoaiCell
+          );
+          list.append(row);
+          row.click(function () {
+            $(".selected-row").removeClass("selected-row");
+            row.addClass("selected-row");
+            const getid = item.id;
+          });
+        });
+        $("#listContainerTra").show();
+      }
     </script>
-    <script src="../utils/format.js"></script>
   </body>
 </html>

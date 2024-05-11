@@ -1354,3 +1354,6 @@ select#input-sort {
 .shadow-container {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.confirm-button[hidden] {
+  display: none;
+}

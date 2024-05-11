@@ -1,0 +1,7 @@
+.confirm-button[hidden] {
+    display: none;
+  }
+.selected-row {
+    border-radius: 8px; 
+    background-color: #f0f0f0; 
+}
