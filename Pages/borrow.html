@@ -145,8 +145,8 @@
 
         function getPhieuMuon(keyword) {
           const url = keyword
-            ? `http://localhost:8085/api/filterPhieuMuon?keyword=${keyword}`
-            : "http://localhost:8085/api/filterPhieuMuon";
+            ? `http://localhost:8085/api/filterPhieuMuonChuaTra?keyword=${keyword}`
+            : "http://localhost:8085/api/filterPhieuMuonChuaTra";
 
           $.ajax({
             url: url,
@@ -207,7 +207,6 @@
         }
         function displayList(data) {
           let role = sessionStorage.getItem("role");
-
           const list = $("#list-phieu");
           list.empty();
           data.forEach(function (item) {
@@ -249,6 +248,7 @@
                 }).then((result) => {
                   if (result.isConfirmed) {
                     xacNhanMuon(item.id);
+                    window.location.reload();
                   }
                 });
               });
@@ -266,6 +266,7 @@
                 }).then((result) => {
                   if (result.isConfirmed) {
                     taoPhieuTra(item.id);
+                    window.location.reload();
                   }
                 });
               });

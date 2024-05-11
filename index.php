@@ -1069,8 +1069,8 @@
                 <h5>
                     <a href="">Phiếu Mượn Số: ${phieuMuon.id}</a>
                 </h5>
-                <h6>Ngày mượn: <span><small> ${phieuMuon.ngayMuon ? phieuMuon.ngayMuon : 'Chưa có dữ liệu'}</small></span></h6>
-                <h6>Hạn mượn:<span><small> ${phieuMuon.hanMuon ? phieuMuon.hanMuon : 'Chưa có dữ liệu'}</small></span></h6>
+                <h6>Ngày mượn: <span><small> ${phieuMuon.ngayMuon ? formatDate(phieuMuon.ngayMuon) : 'Chưa có dữ liệu'}</small></span></h6>
+                <h6>Hạn mượn:<span><small> ${phieuMuon.hanMuon ? formatDate(phieuMuon.hanMuon) : 'Chưa có dữ liệu'}</small></span></h6>
                 <h6>Trạng thái mượn:  <span><small>${phieuMuon.xacNhanMuon === "true" ? 'Đã xác nhận' : 'Chưa xác nhận'}</small></span> </h6>
             </div>
             <button id="button-hit" style="padding: 10px 10px;" class="btn btn-primary btn-select"  data-phieumuon="${phieuMuon.id}" onClick="addTaiLieu(this.getAttribute('data-phieumuon'))">Chọn</button>
@@ -1163,6 +1163,7 @@
         checkUserRole();
     </script>
     <script src="utils/logout.js"></script>
+    <script src="utils/format.js"></script>
 </body>
 
 </html>
