@@ -11,7 +11,6 @@ function getSuppliers() {
     },
   });
 }
-
 const themNhaCungCap = () => {
   Swal.fire({
     title: "Thêm Nhà Cung Cấp",

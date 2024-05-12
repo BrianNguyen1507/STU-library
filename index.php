@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="images/logo/Logo_STU.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -154,7 +155,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
-                    <img src="images/main-logo.png" class="logo">
+                    <img src="images/logo/Logo_STU.png" height="200rem" class="logo" alt="Logo">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false"
@@ -413,33 +414,6 @@
             </div>
             <div class="swiper testimonial-swiper ">
                 <div class="swiper-wrapper">
-                    <!-- <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"I stumbled upon this bookstore while visiting the city, and it instantly became
-                                my favorite
-                                spot. The cozy atmosphere, friendly staff, and wide selection of books make every visit
-                                a delight!"
-                            </blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Emma Chamberlin</h5>
-                        </div>
-                    </div> -->
                     <div class="swiper-slide">
                         <div class="card position-relative text-left p-5 border rounded-3">
                             <blockquote>"As an avid reader, I'm always on the lookout for new releases, and this
@@ -643,10 +617,9 @@
                     <div class="row d-flex flex-wrap justify-content-between">
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu">
-                                <img src="images/main-logo.png" alt="logo" class="img-fluid mb-2">
-                                <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa
-                                    volutpat aenean odio
-                                    erat nullam fringilla.</p>
+                                <img src="images/logo/Logo_STU.png" alt="logo" class="img-fluid mb-2">
+                                <h6>TRƯỜNG ĐẠI HỌC CÔNG NGHỆ SÀI GÒN</h6>
+                                <h8>SAI GON TECHNOLOGY UNIVERSITY</h8>
                                 <div class="social-links">
                                     <ul class="d-flex list-unstyled">
                                         <li>
@@ -734,12 +707,13 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu contact-item">
-                                <h5 class="widget-title text-capitalize pb-2">Contact Us</h5>
-                                <p>Do you have any queries or suggestions? <a href="mailto:"
-                                        class="text-decoration-underline">yourinfo@gmail.com</a></p>
-                                <p>If you need support? Just give us a call. <a href="#"
-                                        class="text-decoration-underline">+55 111 222
-                                        333 44</a></p>
+                                <h6 class="widget-title text-capitalize pb-2">THÀNH VIÊN (6)</h6>
+                                <p>HOÀNG KHẮC GIÁP</p>
+                                <p>LÊ HUỲNH HOÀN HẢO</p>
+                                <p>NGUYỄN VIẾT TUẤN</p>
+                                <p>NGUYỄN PHI HIẾU</p>
+                                <p>ĐẶNG THỊ KIM NGÂN</p>
+                                <p>LÊ THANH NAM</p>
                             </div>
                         </div>
                     </div>
@@ -753,24 +727,11 @@
             <div class="d-flex flex-wrap justify-content-between">
                 <div class="ship-and-payment d-flex gap-md-5 flex-wrap">
                     <div class="shipping d-flex">
-                        <p>We ship with:</p>
-                        <div class="card-wrap ps-2">
-                            <img src="images/dhl.png" alt="visa">
-                            <img src="images/shippingcard.png" alt="mastercard">
-                        </div>
-                    </div>
-                    <div class="payment-method d-flex">
-                        <p>Payment options:</p>
-                        <div class="card-wrap ps-2">
-                            <img src="images/visa.jpg" alt="visa">
-                            <img src="images/mastercard.jpg" alt="mastercard">
-                            <img src="images/paypal.jpg" alt="paypal">
-                        </div>
+                        <p>CHỦ ĐỀ: XÂY DỰNG TRANG WEB QUẢN LÝ THƯ VIỆN STU</p>
                     </div>
                 </div>
                 <div class="copyright">
-                    <p>© Copyright 2024 Bookly. HTML Template by <a href="https://templatesjungle.com/"
-                            target="_blank">TemplatesJungle</a>
+                    <p>NHÓM 1 - THỰC TẬP TỐT NGHIỆP - TRƯỜNG ĐẠI HỌC CÔNG NGHỆ SÀI GÒN
                     </p>
                 </div>
             </div>

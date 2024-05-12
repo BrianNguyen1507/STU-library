@@ -1,9 +1,7 @@
 var getToken = sessionStorage.getItem("token");
-
 if (getToken) {
   var headers = new Headers();
   headers.append("Authorization", "Bearer " + getToken);
-
   var request = new Request(
     "http://localhost:8085/api/NguoiDung/GetNguoiDung",
     {
@@ -13,13 +11,11 @@ if (getToken) {
       cache: "default",
     }
   );
-
   fetch(request)
     .then((response) => response.json())
     .then((data) => {
       var userInfo = data;
       var userInfoHTML = "";
-
       userInfoHTML +=
         "<form id='user-update-form' onsubmit='handleUpdateSubmit(event)'>";
       userInfoHTML += "<div class='tab-content' id='nav-tabContent'>";
@@ -32,7 +28,6 @@ if (getToken) {
         userInfo.taiKhoan.email +
         "' readonly>";
       userInfoHTML += "</div>";
-
       userInfoHTML += "<div class='form-group pb-3'>";
       userInfoHTML +=
         "<label class='mb-2' for='sign-in'>Tên người dùng</label>";
@@ -41,7 +36,6 @@ if (getToken) {
         userInfo.tenNguoiDung +
         "' required>";
       userInfoHTML += "</div>";
-
       userInfoHTML += "<div class='form-group pb-3'>";
       userInfoHTML += "<label class='mb-2' for='sign-in'>Địa chỉ</label>";
       userInfoHTML +=
@@ -49,7 +43,6 @@ if (getToken) {
         userInfo.diaChi +
         "' required>";
       userInfoHTML += "</div>";
-
       userInfoHTML += "<div class='form-group pb-3'>";
       userInfoHTML += "<label class='mb-2' for='sign-in'>SĐT</label>";
       userInfoHTML +=
@@ -57,23 +50,19 @@ if (getToken) {
         userInfo.dienThoai +
         "' required>";
       userInfoHTML += "</div>";
-
       userInfoHTML += "<div id='update-response'></div>";
       userInfoHTML += "</div>";
-
       userInfoHTML +=
         "<button type='submit' class='btn btn-dark w-100 my-3'>Cập nhật</button>";
       userInfoHTML += "</div>";
       userInfoHTML += "</div>";
       userInfoHTML += "</form>";
-
       document.getElementById("user-info").innerHTML = userInfoHTML;
     })
     .catch((error) => console.error("Error:", error));
 } else {
   console.log("Token not found in session storage");
 }
-
 function getUsers() {
   $.ajax({
     url: "http://localhost:8085/api/NguoiDung/filter",
@@ -87,7 +76,6 @@ function getUsers() {
     },
   });
 }
-
 function displayList(data) {
   const list = $("#list");
   list.empty();

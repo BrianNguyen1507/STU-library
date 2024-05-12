@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Registration Site</title>
-  <!-- <link rel="icon" type="image/png" href="../assets/img/logo.png"> -->
   <link rel="stylesheet" href="./css/login.css">
+  <link rel="icon" type="image/x-icon" href="images/logo/Logo_STU.pn" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -58,13 +58,11 @@
       </form>
     </div>
   </div>
-
   <script>
     $(() => {
       document.getElementById('show').checked = true;
       sessionStorage.getItem("token") && (window.location.href = "index.php");
     });
-
     function handleSubmitRegister(event) {
       event.preventDefault();
       const username = $("#tenDangNhap").val();
@@ -72,7 +70,6 @@
       const password = $("#password").val();
       const confirmPassword = $("#passwordConfirm").val();
       const role = $("#phanQuyenId").val();;
-
       sendRegistrationData({
         tenDangNhap: username,
         email: email,
@@ -81,7 +78,6 @@
         phanQuyenId: role
       });
     }
-
 
     function sendRegistrationData(registrationData) {
       $.ajax({

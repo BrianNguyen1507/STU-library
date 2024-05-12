@@ -5,7 +5,6 @@ function login($email, $password)
         'email' => $email,
         'password' => $password
     );
-
     $jsonData = json_encode($requestData);
 
     $options = array(
@@ -16,13 +15,9 @@ function login($email, $password)
             'ignore_errors' => true
         )
     );
-
     $context = stream_context_create($options);
-
     $response = file_get_contents('http://localhost:8085/api/login', false, $context);
-
     return $response;
-
 }
 
 

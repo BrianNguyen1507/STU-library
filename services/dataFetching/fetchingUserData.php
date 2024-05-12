@@ -4,7 +4,6 @@ try {
     $data = file_get_contents($url);
     if ($data !== false) {
         $result = json_decode($data, true);
-
         foreach ($result as $nguoiDung) {
             echo '
             <div class="tab-content" id="nav-tabContent">
@@ -64,7 +63,6 @@ try {
                 </div>
             </div>';
         }
-
     }
 } catch (PDOException $err) {
     echo "<script>console.log('FAILED. Error: $err' );</script><br><br>";

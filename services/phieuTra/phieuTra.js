@@ -2,7 +2,6 @@ function getPhieuTra(keyword) {
   const url = keyword
     ? `http://localhost:8085/api/filterPhieuTraSach?keyword=${keyword}`
     : "http://localhost:8085/api/filterPhieuTraSach";
-
   $.ajax({
     url: url,
     type: "GET",
@@ -15,7 +14,6 @@ function getPhieuTra(keyword) {
     },
   });
 }
-
 function getPhieuMuon(keyword) {
   const url = keyword
     ? `http://localhost:8085/api/filterPhieuMuonChuaTra?keyword=${keyword}`

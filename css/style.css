@@ -1357,3 +1357,25 @@ select#input-sort {
 .confirm-button[hidden] {
   display: none;
 }
+.logo {
+  max-width: 100%;
+  height: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+      max-width: 200px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .logo {
+      max-width: 250px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .logo {
+      max-width: 300px;
+  }
+}

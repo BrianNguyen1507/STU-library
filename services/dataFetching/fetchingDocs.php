@@ -4,7 +4,6 @@ try {
     $data = file_get_contents($url);
     if ($data !== false) {
         $result = json_decode($data, true);
-
         foreach ($result['contents'] as $ele) {
             echo '
             <div class="swiper-slide">
@@ -22,18 +21,15 @@ try {
                 </div>
             </div>';
         }
-
         echo '<div class="pagination">';
         echo '<a href="#" class="prevBtn">Previous</a>';
         echo '<a href="#" class="nextBtn">Next</a>';
         echo '</div>';
-
     }
 } catch (PDOException $err) {
     echo "<script>console.log('FAILED. Error: $err' );</script><br><br>";
 }
 ?>
-
 <script>
     $(".detail-link").click((e) => {
         e.preventDefault();
@@ -64,5 +60,4 @@ try {
         });
     });
 </script>
-
 <!-- <script src="utils/detail.js"></script> -->
