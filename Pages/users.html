@@ -9,6 +9,8 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <script src="../services/nhaCungCap/nhaCungCap.js"></script>
+    <script src="../services/userData/getUserData.js"></script>
     <style>
       .shadow-container {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -74,51 +76,6 @@
             getSuppliers();
           }
         });
-
-        function getUsers() {
-          $.ajax({
-            url: "http://localhost:8085/api/NguoiDung/filter",
-            type: "GET",
-            contentType: "application/json",
-            success: function (response) {
-              displayList(response.contents);
-            },
-            error: function (xhr, status, error) {
-              console.error("Error fetching users:", error);
-            },
-          });
-        }
-
-        function getSuppliers() {
-          $.ajax({
-            url: "http://localhost:8085/api/filterNhaCungCap",
-            type: "GET",
-            contentType: "application/json",
-            success: function (response) {
-              displayList(response.contents);
-            },
-            error: function (xhr, status, error) {
-              console.error("Error fetching suppliers:", error);
-            },
-          });
-        }
-        function displayList(data) {
-          const list = $("#list");
-          list.empty();
-          data.forEach(function (item) {
-            const row = $("<tr>");
-            const idCell = $("<td>").text(item.id);
-            const nameCell = $("<td>").text(
-              item.tenNguoiDung || item.tenNhaCungCap
-            );
-            const emailCell = $("<td>").text(item.email || "");
-            const addressCell = $("<td>").text(item.diaChi || "");
-            const phoneCell = $("<td>").text(item.dienThoai || "");
-            row.append(idCell, nameCell, emailCell, addressCell, phoneCell);
-            list.append(row);
-          });
-          $("#listContainer").show();
-        }
       });
     </script>
   </body>

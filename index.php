@@ -23,6 +23,13 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="utils/sectionClick.js"> </script>
+    <script src="services/taiLieu/taiLieu.js"></script>
+    <script src="services/phieuMuon/phieuMuon.js"></script>
+    <script src="services/nhaCungCap/nhaCungCap.js"></script>
+    <script src="services/userData/getUserData.js"></script>
+    <script src="utils/logout.js"></script>
+    <script src="utils/format.js"></script>
 </head>
 
 <body>
@@ -130,43 +137,19 @@
 
     <div class="search-popup">
         <div class="search-popup-container">
-
             <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value=""
-                    name="s" />
-                <button type="submit" class="search-submit"><svg class="search">
+                <input type="search" id="search-form-documents" class="search-field" placeholder="Nhập từ khóa ..."
+                    value="" name="s" />
+                <button type="submit" class="search-submit">
+                    <svg class="search">
                         <use xlink:href="#search"></use>
-                    </svg></button>
+                    </svg>
+                </button>
             </form>
-            <h5 class="cat-list-title">Browse Categories</h5>
 
-            <ul class="cat-list">
-                <li class="cat-list-item">
-                    <a href="#" title="Romance">Romance</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Thriller">Thriller</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Sci-fi">Sci-fi</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Cooking">Cooking</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Health">Health</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Lifestyle">Lifestyle</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Fiction">Fiction</a>
-                </li>
-            </ul>
-
+            <h5 class="cat-list-title">Tìm kiếm với tên tài liệu, sách, ...</h5>
         </div>
     </div>
-
     <header id="header" class="site-header">
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
@@ -253,7 +236,6 @@
                                                             </div>
                                                         </nav>
                                                         <div id="user-info"></div>
-                                                        <script src="modules/userData/getUserData.js"></script>
                                                     </div>
                                                 </div>
                                             </div>
@@ -283,7 +265,7 @@
                                             };
 
                                             var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "modules/userData/updateUserData.php", true);
+                                            xhr.open("POST", "services/userData/updateUserData.php", true);
                                             xhr.setRequestHeader("Content-Type", "application/json");
 
                                             xhr.onload = function () {
@@ -803,295 +785,20 @@
         $(() => {
             const token = sessionStorage.getItem("token");
             !token && (window.location.href = "login.php");
-
         });
-
-        const getTaiLieu = () => {
-            $(".product-swiper .swiper-wrapper").html("");
-            $.ajax({
-                url: "http://localhost:8085/api/filterTaiLieu",
-                type: "GET",
-                contentType: "application/json",
-            }).done((response) => {
-                const taiLieu = response.contents;
-                taiLieu.forEach((item) => {
-                    const taiLieuItem = `
-                        <div class="swiper-slide">
-                            <div class="card position-relative p-4 border rounded-3">
-                                <img src="${item.hinhAnhDaiDien}" class="img-fluid shadow-sm" alt="">
-                                <h6 class="mt-4 mb-0 fw-bold"><a href="#" class="detail-link" data-id="${item.id}">${item.tenTaiLieu}</a></h6>
-                                <p>Thể loại: ${item.theLoai}</p>
-                                <p>Nhà xuất bản: ${item.nhaXuatBan}</p>
-                                <p>Số lượng còn lại: ${item.soLuongTon}</p>
-                                <span class="price text-primary fw-bold mb-2 fs-5">${item.soLuongTon}</span>
-                                <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                    <a class="btn btn-dark detail-link" data-id="${item.id}" onClick="chiTietTaiLieu(this);">Xem chi tiết</a>
-                                    <a class="btn btn-dark add-link" data-id="${item.id}" onClick="chonPhieuMuon_taiLieu(this.getAttribute('data-id'))">Thêm</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    $(".product-swiper .swiper-wrapper").append(taiLieuItem);
-                });
-            }).fail((error) => {
-                console.log(error);
-            });
-        }
         getTaiLieu();
-        const chiTietTaiLieu = (e) => {
-            const id = $(e).data("id");
-
-            $.ajax({
-                url: `http://localhost:8085/api/taiLieu_id=${id}`,
-                type: "GET",
-            }).done((data) => {
-                Swal.fire({
-                    title: data.tenTaiLieu,
-                    html: `
-                    <img src="${data.hinhAnhDaiDien}" class="img-fluid shadow-sm" alt="${data.tenTaiLieu}">
-                    <p>Tác giả: ${data.tenTacGia}</p>
-                    <p>Ngôn ngữ: ${data.ngonNgu}</p>
-                    <p>Thể loại: ${data.theLoai}</p>
-                    <p>Nhà xuất bản: ${data.nhaXuatBan}</p>
-                    <p>Nội dung: ${data.noiDung}</p>
-                    <p>Số lượng còn lại: ${data.soLuongTon}</p>
-                `,
-                });
-            }).fail((err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: id,
-                });
-            });
-        };
-        const themTaiLieu = () => {
-            Swal.fire({
-                title: "Thêm tài liệu",
-                html: `
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Tên tài liệu</span>
-                        <input type="text" class="form-control" id="tenTaiLieu" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Tên tác giả</span>
-                        <input type="text" class="form-control" id="tenTacGia" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Ngôn ngữ</span>
-                        <input type="text" class="form-control" id="ngonNgu" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Thể loại</span>
-                        <input type="text" class="form-control" id="theLoai" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Nhà xuất bản</span>
-                        <input type="text" class="form-control" id="nhaXuatBan" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Nội dung</span>
-                        <input type="text" class="form-control" id="noiDung" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Số lương tồn</span>
-                        <input type="text" class="form-control" id="soLuongTon" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Hình ảnh đại diện</span>
-                        <input type="text" class="form-control" id="hinhAnhDaiDien" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: "Thêm tài liệu",
-                showLoaderOnConfirm: true,
-                preConfirm: async (login) => { },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const tenTaiLieu = $("#tenTaiLieu").val();
-                    const tenTacGia = $("#tenTacGia").val();
-                    const ngonNgu = $("#ngonNgu").val();
-                    const theLoai = $("#theLoai").val();
-                    const nhaXuatBan = $("#nhaXuatBan").val();
-                    const noiDung = $("#noiDung").val();
-                    const soLuongTon = $("#soLuongTon").val();
-                    const hinhAnhDaiDien = $("#hinhAnhDaiDien").val();
-                    $.ajax({
-                        url: "http://localhost:8085/api/createTaiLieu",
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            tenTaiLieu,
-                            tenTacGia,
-                            ngonNgu,
-                            theLoai,
-                            nhaXuatBan,
-                            noiDung,
-                            soLuongTon,
-                            hinhAnhDaiDien
-                        })
-                    }).done((response) => {
-                        Swal.fire({
-                            icon: "success",
-                            title: `Tạo tài liệu thành công`,
-                        });
-                    }).fail((error) => {
-                        Swal.fire({
-                            icon: "error",
-                            title: `Tạo tài liệu thất bại`,
-                        });
-                    });
-                }
-            });
-        }
-
-        const themNhaCungCap = () => {
-            Swal.fire({
-                title: "Thêm Nhà Cung Cấp",
-                html: `
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon3">Tên Nhà Cung Cấp</span>
-                <input type="text" class="form-control" id="tenNhaCungCap" aria-describedby="basic-addon3 basic-addon4">
-            </div>
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon3">Email</span>
-                <input type="text" class="form-control" id="email" aria-describedby="basic-addon3 basic-addon4">
-            </div>
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon3">Địa Chỉ</span>
-                <input type="text" class="form-control" id="diaChi" aria-describedby="basic-addon3 basic-addon4">
-            </div>
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon3">Điện Thoại</span>
-                <input type="text" class="form-control" id="phonenumber" aria-describedby="basic-addon3 basic-addon4">
-            </div>
-        `,
-                showCancelButton: true,
-                confirmButtonText: "Thêm Nhà Cung Cấp",
-                showLoaderOnConfirm: true,
-                preConfirm: async (login) => { },
-                allowOutsideClick: () => !Swal.isLoading()
-
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const tenNhaCungCap = $("#tenNhaCungCap").val();
-                    const email = $("#email").val();
-                    const diaChi = $("#diaChi").val();
-                    const dienThoai = $("#phonenumber").val();
-
-                    $.ajax({
-                        url: "http://localhost:8085/api/createNhaCungCap",
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            tenNhaCungCap,
-                            email,
-                            diaChi,
-                            dienThoai,
-                        })
-                    }).done((response) => {
-                        Swal.fire({
-                            icon: "success",
-                            title: `Thêm nhà cung cấp mới thành công`,
-                        });
-
-                    }).fail((xhr) => {
-                        Swal.fire({
-                            icon: "error",
-                            title: `Thêm nhà cung cấp thất bại`,
-                        });
-
-                    });
-                }
-            });
-        }
 
 
 
-        const taoPhieuMuon = () => {
-            Swal.fire({
-                title: "Bạn muốn tạo phiếu mượn?",
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "OK"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const token = sessionStorage.getItem('token');
-                    const headers = {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    };
-
-                    $.ajax({
-                        url: "http://localhost:8085/api/addPhieuMuon",
-                        type: "POST",
-                        headers: headers,
-                        contentType: "application/json",
-                        data: JSON.stringify({}),
-                        success: function (response) {
-                            Swal.fire({
-                                icon: "success",
-                                title: `Tạo phiếu mượn thành công`,
-                            });
-                            getPhieuMuon();
-                        },
-                        error: function (xhr, status, error) {
-                            Swal.fire({
-                                icon: "error",
-                                title: `Tạo phiếu mượn thất bại`,
-                            });
-                        }
-                    });
-                }
-            });
-        }
 
 
-        const getPhieuMuon = () => {
-            const token = sessionStorage.getItem('token');
-            const headers = {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            };
-            $.ajax({
-                url: "http://localhost:8085/api/getPhieuMuonAuthentication",
-                type: "GET",
-                headers: headers,
-                contentType: "application/json",
-            }).done((response) => {
-                const phieuMuonItems = response.map((phieuMuon) => {
-                    return phieuMuon.xacNhanMuon === "false" ? `
-        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm" data-phieu-muon-id="${phieuMuon.id}">
-            <div>
-                <h5>
-                    <a href="">Phiếu Mượn Số: ${phieuMuon.id}</a>
-                </h5>
-                <h6>Ngày mượn: <span><small> ${phieuMuon.ngayMuon ? formatDate(phieuMuon.ngayMuon) : 'Chưa có dữ liệu'}</small></span></h6>
-                <h6>Hạn mượn:<span><small> ${phieuMuon.hanMuon ? formatDate(phieuMuon.hanMuon) : 'Chưa có dữ liệu'}</small></span></h6>
-                <h6>Trạng thái mượn:  <span><small>${phieuMuon.xacNhanMuon === "true" ? 'Đã xác nhận' : 'Chưa xác nhận'}</small></span> </h6>
-            </div>
-            <button id="button-hit" style="padding: 10px 10px;" class="btn btn-primary btn-select"  data-phieumuon="${phieuMuon.id}" onClick="addTaiLieu(this.getAttribute('data-phieumuon'))">Chọn</button>
-            </li>
-    ` : ``;
-                }).join('');
-                $('.list-PhieuMuon , .custom-class').html(phieuMuonItems);
-                $('.custom-class #button-hit').hide();
 
-            }).fail((error) => {
-                console.log(error);
-            });
-        }
+
+
         getPhieuMuon();
-
         let selectedTaiLieuId = null;
-
         const chonPhieuMuon_taiLieu = (taiLieuId) => {
-
             selectedTaiLieuId = taiLieuId;
-
             getPhieuMuon();
             Swal.fire({
                 title: "Chọn Phiếu Mượn",
@@ -1102,68 +809,14 @@
                 showConfirmButton: false
             });
         }
-        const addTaiLieu = (phieuMuonId) => {
-            if (selectedTaiLieuId != null) {
-                const token = sessionStorage.getItem('token');
-                const headers = {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                };
+        $(".search-form").submit(function (event) {
+            event.preventDefault();
+            const keyword = $("#search-form-documents").val();
+            getTaiLieu(keyword);
+        });
 
-                const requestBody = JSON.stringify({
-                    "phieuMuonId": phieuMuonId,
-                    "taiLieuId": selectedTaiLieuId
-                });
-
-                $.ajax({
-                    url: `http://localhost:8085/api/addTaiLieutoPhieuMuon?phieuMuonId=${phieuMuonId}&taiLieuId=${selectedTaiLieuId}`,
-                    type: "POST",
-                    headers: headers,
-                    contentType: "application/json",
-                    data: requestBody,
-                }).done(() => {
-                    Swal.fire({
-                        icon: "success",
-                        title: `Thêm Tài Liệu vào Phiếu Mượn thành công!`,
-                    });
-                }).fail((error) => {
-                    Swal.fire({
-                        icon: "error",
-                        title: `Thêm Tài Liệu vào Phiếu Mượn thất bại!`,
-                    });
-
-                });
-            } else {
-                console.log("Không có tài liệu được chọn.");
-
-            }
-        };
-
-        function checkUserRole() {
-            const userRole = sessionStorage.getItem('role');
-            const list = document.getElementById('menu-list');
-            const themPhieuMuon = document.getElementById('themPhieuMuonBtn');
-            const taoPhieuMuonBtn = document.getElementById('TaoPhieuMuonBtn');
-            const themTaiLieuBtn = document.getElementById('themTaiLieuBtn');
-            const themNhaCungCapBtn = document.getElementById('themNhaCungCapBtn');
-            if (userRole === 'Role_Admin' || userRole === 'Role_LibraryManager') {
-                themTaiLieuBtn.style.display = 'inline-block';
-                themNhaCungCapBtn.style.display = 'inline-block';
-                list.style.display = 'inline-block';
-                taoPhieuMuonBtn.style.display = 'none';
-                themPhieuMuon.style.display = 'none';
-            } else {
-                themTaiLieuBtn.style.display = 'none';
-                themNhaCungCapBtn.style.display = 'none';
-                list.style.display = 'none';
-                taoPhieuMuonBtn.style.display = 'inline-block';
-                themPhieuMuon.style.display = 'inline-block';
-            }
-        }
         checkUserRole();
     </script>
-    <script src="utils/logout.js"></script>
-    <script src="utils/format.js"></script>
 </body>
 
 </html>

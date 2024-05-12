@@ -9,6 +9,7 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <script src="../services/phieuTra/phieuTra.js"></script>
     <style>
       .shadow-container {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -103,7 +104,7 @@
           if (listType === "phieumuon") {
             $("#listContainer").show();
             $("#listContainerTra").hide();
-            getPhieuMuon();
+            getPhieuMuonChuaTra();
           } else if (listType === "phieutra") {
             $("#listContainer").hide();
             $("#listContainerTra").show();
@@ -117,37 +118,17 @@
           if (listType === "phieumuon") {
             $("#listContainer").show();
             $("#listContainerTra").hide();
-            getPhieuMuon(keyword);
+            getPhieuMuonChuaTra(keyword);
           } else if (listType === "phieutra") {
             $("#listContainer").hide();
             $("#listContainerTra").show();
             getPhieuTra(keyword);
           }
         });
-
-        function getPhieuTra(keyword) {
-          const url = keyword
-            ? `http://localhost:8085/api/filterPhieuTraSach?keyword=${keyword}`
-            : "http://localhost:8085/api/filterPhieuTraSach";
-
-          $.ajax({
-            url: url,
-            type: "GET",
-            contentType: "application/json",
-            success: function (response) {
-              displayListTra(response.contents);
-            },
-            error: function (xhr, status, error) {
-              console.error("Error fetching users:", error);
-            },
-          });
-        }
-
-        function getPhieuMuon(keyword) {
+        function getPhieuMuonChuaTra(keyword) {
           const url = keyword
             ? `http://localhost:8085/api/filterPhieuMuonChuaTra?keyword=${keyword}`
             : "http://localhost:8085/api/filterPhieuMuonChuaTra";
-
           $.ajax({
             url: url,
             type: "GET",
@@ -160,7 +141,7 @@
             },
           });
         }
-
+        getPhieuMuonChuaTra();
         function xacNhanMuon(idPhieuMuon) {
           $.ajax({
             url: `http://localhost:8085/api/xacNhanPhieuMuon/phieuMuonId=${idPhieuMuon}`,
