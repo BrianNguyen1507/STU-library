@@ -24,7 +24,7 @@ if (getToken) {
       userInfoHTML += "<div class='form-group py-3'>";
       userInfoHTML += "<label class='mb-2' for='sign-in'>Email</label>";
       userInfoHTML +=
-        "<input type='text' minlength='2' name='email' id='email' class='form-control w-100 rounded-3 p-3' value='" +
+        "<input type='text' minlength='2' name='emailUsers' id='emailUsers' class='form-control w-100 rounded-3 p-3' value='" +
         userInfo.taiKhoan.email +
         "' readonly>";
       userInfoHTML += "</div>";
@@ -32,21 +32,21 @@ if (getToken) {
       userInfoHTML +=
         "<label class='mb-2' for='sign-in'>Tên người dùng</label>";
       userInfoHTML +=
-        "<input type='text' minlength='2' name='username' id='username' class='form-control w-100 rounded-3 p-3' value='" +
+        "<input type='text' minlength='2' name='usernameUsers' id='usernameUsers' class='form-control w-100 rounded-3 p-3' value='" +
         userInfo.tenNguoiDung +
         "' required>";
       userInfoHTML += "</div>";
       userInfoHTML += "<div class='form-group pb-3'>";
       userInfoHTML += "<label class='mb-2' for='sign-in'>Địa chỉ</label>";
       userInfoHTML +=
-        "<input type='text' minlength='2' name='diaChi'  id='diaChi' class='form-control w-100 rounded-3 p-3' value='" +
+        "<input type='text' minlength='2' name='diaChiUsers'  id='diaChiUsers' class='form-control w-100 rounded-3 p-3' value='" +
         userInfo.diaChi +
         "' required>";
       userInfoHTML += "</div>";
       userInfoHTML += "<div class='form-group pb-3'>";
       userInfoHTML += "<label class='mb-2' for='sign-in'>SĐT</label>";
       userInfoHTML +=
-        "<input type='text' minlength='2' name='dienThoai' id='dienThoai' class='form-control w-100 rounded-3 p-3' value='" +
+        "<input type='text' minlength='2' name='dienThoaiUsers' id='dienThoaiUsers' class='form-control w-100 rounded-3 p-3' value='" +
         userInfo.dienThoai +
         "' required>";
       userInfoHTML += "</div>";
@@ -82,7 +82,7 @@ function displayList(data) {
   data.forEach(function (item) {
     const row = $("<tr>");
     const idCell = $("<td>").text(item.id);
-    const nameCell = $("<td>").text(item.tenNguoiDung || item.tenNhaCungCap);
+    const nameCell = $("<td>").text(item.tenNguoiDung);
     const emailCell = $("<td>").text(item.email || "");
     const addressCell = $("<td>").text(item.diaChi || "");
     const phoneCell = $("<td>").text(item.dienThoai || "");

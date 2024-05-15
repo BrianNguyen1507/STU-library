@@ -21,15 +21,15 @@ const themNhaCungCap = () => {
     </div>
     <div class="input-group">
         <span class="input-group-text" id="basic-addon3">Email</span>
-        <input type="text" class="form-control" id="email" aria-describedby="basic-addon3 basic-addon4">
+        <input type="text" class="form-control" id="emailNhaCungCap" aria-describedby="basic-addon3 basic-addon4">
     </div>
     <div class="input-group">
         <span class="input-group-text" id="basic-addon3">Địa Chỉ</span>
-        <input type="text" class="form-control" id="diaChi" aria-describedby="basic-addon3 basic-addon4">
+        <input type="text" class="form-control" id="diaChiNhaCungCap" aria-describedby="basic-addon3 basic-addon4">
     </div>
     <div class="input-group">
         <span class="input-group-text" id="basic-addon3">Điện Thoại</span>
-        <input type="text" class="form-control" id="phonenumber" aria-describedby="basic-addon3 basic-addon4">
+        <input type="text" class="form-control" id="phonenumberNhaCungCap" aria-describedby="basic-addon3 basic-addon4">
     </div>
 `,
     showCancelButton: true,
@@ -40,9 +40,9 @@ const themNhaCungCap = () => {
   }).then((result) => {
     if (result.isConfirmed) {
       const tenNhaCungCap = $("#tenNhaCungCap").val();
-      const email = $("#email").val();
-      const diaChi = $("#diaChi").val();
-      const dienThoai = $("#phonenumber").val();
+      const email = $("#emailNhaCungCap").val();
+      const diaChi = $("#diaChiNhaCungCap").val();
+      const dienThoai = $("#phonenumberNhaCungCap").val();
 
       $.ajax({
         url: "http://localhost:8085/api/createNhaCungCap",

@@ -27,7 +27,7 @@
     <script src="utils/sectionClick.js"> </script>
     <script src="services/taiLieu/taiLieu.js"></script>
     <script src="services/phieuMuon/phieuMuon.js"></script>
-    <script src="services/nhaCungCap/nhaCungCap.js"></script>
+    <script src="services/nhaCungCap//nhaCungCap.js"></script>
     <script src="services/userData/getUserData.js"></script>
     <script src="utils/logout.js"></script>
     <script src="utils/format.js"></script>
@@ -748,14 +748,6 @@
             !token && (window.location.href = "login.php");
         });
         getTaiLieu();
-
-
-
-
-
-
-
-
         getPhieuMuon();
         let selectedTaiLieuId = null;
         const chonPhieuMuon_taiLieu = (taiLieuId) => {

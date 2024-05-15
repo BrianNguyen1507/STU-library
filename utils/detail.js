@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (event) {
             event.preventDefault();
             var documentId = link.getAttribute('data-id');
-            window.location.href = 'modules/dataFetching/fetchingDetail.php?id=' + documentId;
+            window.location.href = 'services/dataFetching/fetchingDetail.php?id=' + documentId;
         });
     });
 });

@@ -81,7 +81,7 @@
 
     function sendRegistrationData(registrationData) {
       $.ajax({
-        url: 'modules/register/handleRegister.php',
+        url: 'services/register/handleRegister.php',
         type: 'POST',
         data: JSON.stringify(registrationData),
       }).done((data) => {
