@@ -39,7 +39,7 @@ const getPhieuMuon = () => {
     }" onClick="addTaiLieu(this.getAttribute('data-phieumuon'))">Chọn</button>
     </li>
 `
-            : ``;
+            : `bạn chưa có phiếu mượn nào`;
         })
         .join("");
       $(".list-PhieuMuon , .custom-class").html(phieuMuonItems);
@@ -126,7 +126,9 @@ function displayList(data) {
         }).then((result) => {
           if (result.isConfirmed) {
             xacNhanMuon(item.id);
-            window.location.reload();
+            setTimeout(function () {
+              window.location.reload();
+            }, 1000);
           }
         });
       });
@@ -144,7 +146,9 @@ function displayList(data) {
         }).then((result) => {
           if (result.isConfirmed) {
             taoPhieuTra(item.id);
-            window.location.reload();
+            setTimeout(function () {
+              window.location.reload();
+            }, 1000);
           }
         });
       });
