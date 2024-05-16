@@ -1,3 +1,3 @@
 ﻿# STU-library
- 
- https://briannguyen1507.github.io/STU-library/
+
+This is a project about the STU library's book borrowing and returning process.
